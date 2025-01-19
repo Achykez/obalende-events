@@ -9,6 +9,7 @@ import {
   Box,
   FlatButton,
   InputsWrap,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ResendTokenFlexbox,
   ResendTokenText,
   Subtitle,

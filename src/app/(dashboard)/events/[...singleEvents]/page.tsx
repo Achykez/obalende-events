@@ -6,6 +6,7 @@ import { FileUploader } from "@/components/fileUploader";
 
 export default function CreateEditEvents({
   params: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     singleEvents: [pageName, eventsId],
   },
 }: {

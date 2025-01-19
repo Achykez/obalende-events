@@ -6,6 +6,7 @@ import { FileUploader } from "@/components/fileUploader";
 
 export default function CreateEditParticpants({
   params: {
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
     singleParticipants: [pageName, categoryId],
   },
 }: {
@@ -157,7 +158,7 @@ const SectionItem = styled.div`
     }
   }
 `;
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FormTextArea = styled.textarea`
   width: 100%;
   height: 100px;
@@ -176,7 +177,7 @@ const FormTextArea = styled.textarea`
   }) =>
     getTextStyle({ weight: weights.Regular, variant: variants.BODY_MEDIUM })};
 `;
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const StyledDatePicker = styled(DatePicker)`
   height: 48px;
   flex: 1;
@@ -209,7 +210,7 @@ const StyledDatePicker = styled(DatePicker)`
     }
   }
 `;
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Flex = styled.div`
   display: flex;
   gap: 20px;

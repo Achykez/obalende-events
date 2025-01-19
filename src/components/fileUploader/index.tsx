@@ -1,4 +1,5 @@
 'use client';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 import {
   CancelIcon,
   DeleteIcon,
@@ -45,6 +46,7 @@ export const FileUploader: FC<FileUploadProps> = ({
   onAltTextChange,
   onImageLinkChange,
   imageHyperlinkUrl,
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSuccess,
   imgDimension,
 }) => {
@@ -70,6 +72,7 @@ export const FileUploader: FC<FileUploadProps> = ({
     [imageName]
   );
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handlePicture = async (file: File) => {
     setUploading(true);
     // uploadImage(file)
