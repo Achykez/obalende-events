@@ -1,7 +1,7 @@
 'use client';
 
 import { createEvent, InfoIcon, manageEvent } from '@/assets';
-import { Container, Question, OptionsContainer, InfoContainer, Option } from './styled-component';
+import { Container, Question, OptionsContainer, InfoContainer, Option } from '../../styled-component';
 
 export const Home = () => {
   return (

@@ -1,7 +1,7 @@
 // import { cookies } from 'next/dist/client/components/headers';
 // import { RedirectType } from 'next/dist/client/components/redirect';
 // import { redirect } from 'next/navigation';
-import { Home } from './home';
+import { Home } from './components/home';
 // import { CookieType } from '@/enums';
 
 export default function page() {
