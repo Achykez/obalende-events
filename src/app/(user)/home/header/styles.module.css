@@ -1,0 +1,22 @@
+/* Main container for the header */
+.mainContainer {
+    background-color: #1a1a1a; 
+    color: #f5f5f5; 
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 20px; 
+    border-bottom: 2px solid #ff9900; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+ 
+  .mainContainer img {
+    margin-right: 20px; 
+    transition: transform 0.3s ease; 
+  }
+  
+  .mainContainer img:hover {
+    transform: scale(1.1);
+  }
+  

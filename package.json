@@ -13,6 +13,7 @@
     "antd": "^5.17.2",
     "axios": "^1.7.9",
     "babel-plugin-styled-components": "^2.1.4",
+    "class-variance-authority": "^0.7.1",
     "cookies-next": "^4.1.1",
     "formik": "^2.4.6",
     "framer-motion": "^11.16.0",
@@ -26,12 +27,14 @@
     "react-share": "^5.1.2",
     "react-toastify": "^11.0.3",
     "sharp": "^0.33.5",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/tailwindcss": "^3.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.23",
     "sass": "^1.83.4",

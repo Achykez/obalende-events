@@ -1,0 +1,36 @@
+.mainContainer {
+padding: 10px;
+}
+
+.mainHeaderContainer {
+    /* border: 1px solid darkblue; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mainHeaderContainer h2 {
+    color: var(--Color-Typography-Title, #120D26);
+font-family: "Airbnb Cereal App";
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 34px; /* 188.889% */
+}
+
+.mainHeaderContainer p {
+    color: var(--Color-Typography-Sub-Color, #747688);
+text-align: right;
+font-family: "Airbnb Cereal App";
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 23px; /* 164.286% */
+};
+
+.mainBodyContainer {
+    display: flex;
+    overflow-x: scroll;
+    align-items: center;
+    gap: 20px;
+}
