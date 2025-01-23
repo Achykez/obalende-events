@@ -53,10 +53,10 @@ const EnuguText = styled.div`
   margin-top: -10px;
 `;
 
-const Letter = styled.span<{ delay: number }>`
+const Letter = styled.span<{ $delay: number }>`
   display: inline-block;
   animation: ${bounce} 1s infinite;
-  animation-delay: ${({ delay }) => delay}s;
+  animation-delay: ${({ $delay }) => $delay}s;
 `;
 
 const FlameIcon = styled.span`
@@ -92,7 +92,7 @@ export const PageLoader: React.FC = () => {
     <Container>
       <ObalendeText>
         {obalendeLetters.map((letter, index) => (
-          <Letter key={index} delay={index * 0.1}>
+          <Letter key={index} $delay={index * 0.1}>
             {letter === "d" ? (
               <>
                 d

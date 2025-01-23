@@ -62,7 +62,7 @@ const SearchTable = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (text: string) => <StatusTag status={text}>{text}</StatusTag>,
+      render: (text: string) => <StatusTag $status={text}>{text}</StatusTag>,
     },
     {
       title: "Description",
@@ -170,7 +170,7 @@ const StyledTable = styled(Table)`
   }
 `;
 
-const StatusTag = styled.div<{ status: string }>`
+const StatusTag = styled.div<{ $status: string }>`
   min-width: 77px;
   padding: 0 6px;
   height: 28px;
@@ -179,16 +179,16 @@ const StatusTag = styled.div<{ status: string }>`
   font-size: 12px;
   align-items: center;
   justify-content: center;
-  background: ${({ theme, status }) =>
-    status.toLowerCase() === "completed"
+  background: ${({ theme, $status }) =>
+    $status.toLowerCase() === "completed"
       ? theme.colors.darkGreen[400] :
-    status.toLowerCase() === "ongoing"
+    $status.toLowerCase() === "ongoing"
       ? theme.colors.lightBlue[50]
       : theme.colors.orange[10]};
-  color: ${({ theme, status }) =>
-    status.toLowerCase() === "completed"
+  color: ${({ theme, $status }) =>
+    $status.toLowerCase() === "completed"
       ? theme.colors.text.tertiary :
-    status.toLowerCase() === "ongoing"
+    $status.toLowerCase() === "ongoing"
       ? theme.colors.blue[700]
       : theme.colors.orange[350]};
   text-align: center;

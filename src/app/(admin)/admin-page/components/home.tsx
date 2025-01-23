@@ -1,6 +1,6 @@
 'use client';
 
-import { createEvent, InfoIcon, manageEvent } from '@/assets';
+import { AppLogo, createEvent, InfoIcon } from '@/assets';
 import { Container, Question, OptionsContainer, InfoContainer, Option } from '../../styled-component';
 
 export const Home = () => {
@@ -8,25 +8,25 @@ export const Home = () => {
     <>
       {/* <Navbar /> */}
       <Container>
-        <Question>What do you want to do today?</Question>
+        <Question>Welcome to Obalande Content Admin</Question>
         <OptionsContainer>
           <Option
-            alt="manage event"
+            alt="create event"
             link={'/events/create'}
             text="Create Event"
             image={createEvent}
           />
           <Option
             alt="manage event"
-            text="Manage Event"
+            text="Manage Events"
             link={'/events'}
-            image={manageEvent}
+            image={AppLogo}
           />
 
         </OptionsContainer>
         <InfoContainer>
           <InfoIcon />
-          This is the backbone of our Karoke Event Here we control the events that are to take place
+          This is the backbone of our Site Here we control the events that are to take place
         </InfoContainer>
       </Container>
     </>
