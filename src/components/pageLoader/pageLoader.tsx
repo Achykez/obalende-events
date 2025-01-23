@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
@@ -60,13 +62,13 @@ const Letter = styled.span<{ $delay: number }>`
   animation-delay: ${({ $delay }) => $delay}s;
 `;
 
-const FlameIcon = styled.span`
-  display: inline-block;
-  color: red;
-  font-size: 48px;
-  margin-left: -10px;
-  animation: ${flameFlicker} 0.6s infinite;
-`;
+// const FlameIcon = styled.span`
+//   display: inline-block;
+//   color: red;
+//   font-size: 48px;
+//   margin-left: -10px;
+//   animation: ${flameFlicker} 0.6s infinite;
+// `;
 
 // Flame SVG
 

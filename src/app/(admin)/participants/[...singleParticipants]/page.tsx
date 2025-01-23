@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
 import { Header } from "@/components";
 import styled from "styled-components";
 import { DatePicker } from "antd";
 import { FileUploader } from "@/components/fileUploader";
 import { useUploadContentMutation } from "@/redux/api/events";
-import { useCreateParticipantMutation, useGetSingleParticpantQuery } from "@/redux/api/participants";
+import { useCreateParticipantMutation, useGetSingleParticpantQuery, useUpdateParticipantMutation } from "@/redux/api/participants";
 import { useFormik } from "formik";
 import { useMemo } from "react";
 
@@ -23,9 +25,14 @@ export default function CreateEditParticpants({
 
   const [uploadContent, {isLoading}] = useUploadContentMutation()
   const [createParticipants, {isLoading: isCreating}] = useCreateParticipantMutation()
+  const [updateParticipants, {isLoading : isUpdating}] = useUpdateParticipantMutation()
   const {data, isLoading: isGettingParticipants} = useGetSingleParticpantQuery(editId)
 
   const editParticipants = (data: any) => {
+
+  }
+
+  const addParticipants = (data: any) => {
 
   }
 
@@ -42,11 +49,11 @@ export default function CreateEditParticpants({
 
   return (
     <Wrapper>
-      <Header title="Create Events" websiteUrl="Upload Details for Karoke Event" />
+      <Header title="Add Participant" websiteUrl="Event" />
       <CreateWrapper>
         <Container>
           <FormContainer>
-            <Title>{isEdit ? "Edit Participant" : "Add New Event"}</Title>
+            <Title>{isEdit ? "Edit Participant" : "Add New Participant"}</Title>
             <FormContent>
               <SectionItem>
                 <FormItem>
