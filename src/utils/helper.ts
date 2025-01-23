@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import { propertyStatuses } from "@/constants/data";
 import clsx, { ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  // return twMerge(clsx(inputs));
 }
 
 // const queryStringToObject = (queryString: string): Record<string, string> => {

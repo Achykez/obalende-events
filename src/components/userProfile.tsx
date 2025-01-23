@@ -20,9 +20,9 @@ export const UserProfile: FC<IProfile> = ({ user, onClick }) => {
 
   return (
     <DetailsContainer onClick={onClick}>
-      <Intials>{`${user?.firstName[0]}${user?.lastName[0]}`}</Intials>
+      <Intials>{`OE`}</Intials>
       <UserProfileText>
-        <Username>{`${user?.firstName} ${user?.lastName}`}</Username>
+        {/* <Username>{`${user?.firstName} ${user?.lastName}`}</Username> */}
         {/* <UserEmail>{userRole ? userRole[0].role.roleName : ''}</UserEmail> */}
       </UserProfileText>
     </DetailsContainer>

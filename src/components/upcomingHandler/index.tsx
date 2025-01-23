@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
 import Location from '@/assets/icons/location'
-import { Typography } from '../Typography'
+// import { Typography } from '../Typography'
 import Image from 'next/image'
 import backgroundImage from '@/assets/images/image 84.png';
 import slides from '@/assets/images/Group.png'

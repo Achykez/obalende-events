@@ -1,4 +1,3 @@
-import { Installments } from '@/redux/api/payments/types';
 import dayjs from 'dayjs';
 
 export const formatDate = (isoDate: string) => {
@@ -28,12 +27,3 @@ export const isValidDate = (dateString: any) => {
 };
 
 
-export const getDueDate = (installments: Installments[]) => {
-  if (installments.length === 0) return '';
-  
-  const earliest = installments.reduce((earliest, current) => {
-    return dayjs(current.date).isBefore(dayjs(earliest.date)) ? current : earliest;
-  });
-
-  return earliest.date;
-}

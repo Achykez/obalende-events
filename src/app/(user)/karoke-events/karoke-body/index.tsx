@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import styles from "./styles.module.css";
 import Calender from "@/assets/icons/calender";
