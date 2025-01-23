@@ -1,13 +1,24 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Constants } from './redux';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { NextRequest, NextResponse } from "next/server";
+import { Constants } from "./redux";
 
-const excludeUrls = [
-  '/',
-  '/karoke-events',
-  '/password-otp',
-  '/login',
-  '/sign-up',
-  '/sent-email',
+// const excludeUrls = [
+//   '/',
+//   '/karoke-events',
+//   '/password-otp',
+//   '/login',
+//   '/sign-up',
+//   '/sent-email',
+// ];
+
+const includedUrls = [
+  "/admin-page",
+  "/events",
+  "/participants",
+  "/events/create",
+  "/participants/create",
+  "events/edit/:eventsId",
+  "/participants/edit/:participantsId",
 ];
 
 export async function middleware(request: NextRequest) {
@@ -15,25 +26,23 @@ export async function middleware(request: NextRequest) {
 
   // Normalize the protocol in production to handle Heroku-specific header issues
   const url = new URL(request.url);
-  const protocol = request.headers.get('x-forwarded-proto');
+  const protocol = request.headers.get("x-forwarded-proto");
 
-  if (process.env.NODE_ENV === 'production' && protocol) {
-    if (protocol.includes(',')) {
+  if (process.env.NODE_ENV === "production" && protocol) {
+    if (protocol.includes(",")) {
       // Use the first valid protocol from the "x-forwarded-proto" header
-      url.protocol = protocol.split(',')[0];
+      url.protocol = protocol.split(",")[0];
     } else {
       url.protocol = protocol; // Assign directly if there's no comma
     }
   }
 
-  // Exclude specific paths from authentication checks
-  if (!excludeUrls.includes(pathname)) {
-    const user = request.cookies.get(Constants.TOKEN); // Check for the user token
+  // Check if user is authenticated for protected routes
+  const user = request.cookies.get(Constants.TOKEN); // Check for the user token
 
-    if (!user) {
-      // Redirect to the sign-in page if the user is not authenticated
-      return NextResponse.redirect(new URL('/login', url.href));
-    }
+  if (!user) {
+    // Redirect to the sign-in page if the user is not authenticated
+    return NextResponse.redirect(new URL("/", url.href));
   }
 
   // Proceed to the next middleware or route handler
@@ -42,13 +51,13 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    "/admin-page",
+    "/events",
+    "/participants",
+    "/events/create",
+    "/events/create/:id*",
+    "/events/edit/:eventId*", // Protect dynamic edit route for events
+    "/participants/create/:eventId", // Protect dynamic
+    "/participants/edit/:participantId*", // Protect dynamic edit route for participants
   ],
 };

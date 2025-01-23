@@ -7,9 +7,24 @@ import OngoingHandler from "@/components/ongoingHandler";
 export default function Main() {
   return (
     <div>
+          <div className={styles.mainHeaderContainer}>
+        <h2>Ongoing Events</h2>
+      </div>
+      <div
+        className={styles.mainBodyContainer}
+        style={{
+          display: "flex",
+          overflow: "scroll",
+          alignItems: "center",
+          gap: "20px",
+          padding:"10px"
+        }}
+      >
+        <OngoingHandler />
+      </div>
       <div className={styles.mainHeaderContainer}>
         <h2>Upcoming Events</h2>
-        <p>See All</p>
+        {/* <p>See All</p> */}
       </div>
       <div
         className={styles.mainBodyContainer}
@@ -31,22 +46,7 @@ export default function Main() {
           />
         ))}
       </div>
-      <div className={styles.mainHeaderContainer}>
-        <h2>Ongoing Events</h2>
-        <p>See All</p>
-      </div>
-      <div
-        className={styles.mainBodyContainer}
-        style={{
-          display: "flex",
-          overflow: "scroll",
-          alignItems: "center",
-          gap: "20px",
-          padding:"10px"
-        }}
-      >
-        <OngoingHandler />
-      </div>
+  
     </div>
   );
 }

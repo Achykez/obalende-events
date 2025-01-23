@@ -11,7 +11,6 @@
 
 .header h2{
     color: var(--Color-Typography-Title, #120D26);
-font-family: "Airbnb Cereal App";
 font-size: 35px;
 font-style: normal;
 font-weight: 400;
@@ -20,7 +19,6 @@ line-height: normal;
 
 .header p {
     color: var(--Color-Typography-Title, #120D26);
-    font-family: "Roboto";
     font-size: 35px;
     font-style: normal;
     font-weight: 400;
@@ -34,7 +32,6 @@ line-height: normal;
 }
 .timeContainer div h2{
     color: var(--Color-Typography-Title, #120D26);
-    font-family: "Airbnb Cereal App";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -49,7 +46,6 @@ line-height: normal;
 }
 .timeContainer div p{
     color: var(--Color-Typography-Sub-Color, #747688);
-    font-family: "Airbnb Cereal App";
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -64,7 +60,6 @@ line-height: normal;
 
 .descriptionHeader div h2 {
     color: var(--Color-Typography-Title, #120D26);
-    font-family: "Airbnb Cereal App";
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
@@ -73,7 +68,6 @@ line-height: normal;
 
 .work {
     color: #120D26;
-    font-family: "Airbnb Cereal App";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

@@ -4,13 +4,15 @@
     padding: 10px;
     gap: 20px;
     border-radius: 18px;
+    min-height: 300px;
+    height: max-content;
     background: #FFF;
     box-shadow: 0px 8px 30px 0px rgba(80, 85, 136, 0.3);
 }
 
 .ImageContainer{
     position: relative;
-    height: 131px;
+    height: 181px;
     margin: auto
 };
 
@@ -22,12 +24,13 @@
 .TextContainer{
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
     /* border: 1px solid blue; */
 }
 
 .firstTextContainer p{
         color: #000;
-        font-family: "poppins";
         font-size: 15px;
         font-style: normal;
         font-weight: 400;
@@ -42,7 +45,6 @@
 
 .secondTextContainer p{
     color: #3F38DD;
-    font-family: "poppins";
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
@@ -60,7 +62,6 @@
 
 .thirdTextContainer p{
     color: #2B2849;
-    font-family: "Airbnb Cereal App";
     font-size: 13px;
     font-style: normal;
     font-weight: 400;

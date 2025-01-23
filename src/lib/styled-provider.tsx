@@ -25,7 +25,7 @@ export const StyledLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body>
-        <ThemeProvider theme={theme === "light" ? lTheme : dTheme}>
+        <ThemeProvider theme={theme === "dark" ? dTheme : lTheme}>
           <GlobalStyles />
           <ToastContainer />
 
