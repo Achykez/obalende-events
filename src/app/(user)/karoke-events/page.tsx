@@ -1,8 +1,12 @@
 import React from 'react'
-
+import KarokeHeader from './karoke-header'
+import KarokeBody from './karoke-body'
 const page = () => {
   return (
-    <div>page</div>
+    <div>
+      <KarokeHeader/>
+      <KarokeBody/>
+    </div>
   )
 }
 

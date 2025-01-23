@@ -1,0 +1,68 @@
+.MainContainer{
+    width: 100%;
+    flex-shrink: 0;
+    padding: 10px;
+    gap: 20px;
+    border-radius: 18px;
+    background: #FFF;
+    box-shadow: 0px 8px 30px 0px rgba(80, 85, 136, 0.3);
+}
+
+.ImageContainer{
+    position: relative;
+    height: 131px;
+    margin: auto
+};
+
+.mainImage{
+    position:absolute;
+    border-radius: 20px;
+}
+
+.TextContainer{
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid blue; */
+}
+
+.firstTextContainer p{
+        color: #000;
+        font-family: "poppins";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+}
+.secondTextContainer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.secondTextContainer p{
+    color: #3F38DD;
+    font-family: "poppins";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+
+}
+/* w-[198px] h-[84px] flex flex-col gap-2 */
+
+.thirdTextContainer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* border: 1px solid yellow; */
+
+}
+
+.thirdTextContainer p{
+    color: #2B2849;
+    font-family: "Airbnb Cereal App";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
