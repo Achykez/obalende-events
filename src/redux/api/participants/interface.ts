@@ -11,6 +11,7 @@ export interface IParticipant {
   name: string;
   alias: string;
   phoneNumber: string;
+  votes: number;
   address: string;
   image: string;
   eventId: string;

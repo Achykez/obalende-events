@@ -1,46 +1,34 @@
-import React from "react";
-import { Space, Table } from "antd";
-import styled from "styled-components";
-import { EyeIcon } from "@/assets";
+import React, { FC, useMemo } from "react";
+import { Space, Table, Dropdown } from "antd";
+import styled, { css, keyframes } from "styled-components";
+import { ArrowDownIcon, EyeIcon } from "@/assets";
 import { EditIcon } from "@/assets/icons/edit-icon";
 import { TrashIcon } from "@/assets/icons/trash-icon";
-import router from "next/router";
+import { EventsResponse } from "@/redux/api/events";
+import { setCookie } from "cookies-next";
+import { CookieType } from "@/enums";
+import { useRouter } from "next/navigation";
 
-const SearchTable = () => {
-  const dataSource = [
-    {
-      key: "1",
-      eventName: "Karaoke Night 2025",
-      dateStart: "2025-02-01",
-      dateEnd: "2025-02-01",
-      status: "Upcoming",
-      description: "An evening of karaoke fun and competition.",
-    },
-    {
-      key: "2",
-      eventName: "Valentine's Karaoke Special",
-      dateStart: "2025-02-14",
-      dateEnd: "2025-02-14",
-      status: "Upcoming",
-      description: "Celebrate Valentine's Day with love songs and duets.",
-    },
-    {
-      key: "3",
-      eventName: "New Year's Karaoke Party",
-      dateStart: "2024-12-31",
-      dateEnd: "2025-01-01",
-      status: "Completed",
-      description: "A fun-filled night to welcome the New Year with music.",
-    },
-    {
-      key: "4",
-      eventName: "Weekly Karaoke Championship",
-      dateStart: "2025-01-20",
-      dateEnd: "2025-01-20",
-      status: "Ongoing",
-      description: "The weekly championship for aspiring karaoke stars.",
-    },
-  ];
+interface IProps {
+  data?: EventsResponse[];
+  isLoading?: boolean;
+}
+const SearchTable: FC<IProps> = ({ data, isLoading }) => {
+  const router = useRouter();
+  const dataSource = useMemo(() => {
+    return (
+      data?.map((item) => {
+        return {
+          ...item,
+          dateStart: new Date(item.startTime).toLocaleString(),
+          dateEnd: new Date(item.endTime).toLocaleString(),
+          eventName: item.name,
+          description: item.description ?? "",
+          id: item._id,
+        };
+      }) ?? []
+    );
+  }, [data]);
 
   const columns = [
     {
@@ -74,18 +62,48 @@ const SearchTable = () => {
       key: "action",
       render: (_: string, record: any) => (
         <Space size="middle">
-          <ActionButton
-            onClick={() => router.push(`/eshop/orders/${record.id}`)}>
-            <EyeIcon />
-            <p className="iconText">View</p>
-          </ActionButton>
-          <ActionButton>
-            <EditIcon /> <p className="iconText">Edit</p>
-          </ActionButton>
-          <ActionButton>
-            <TrashIcon />
-            <p className="iconText">Delete</p>
-          </ActionButton>
+          <Dropdown
+            placement="bottomLeft"
+            menu={{
+              items: [
+                {
+                  key: 1,
+                  label: (
+                    <OptionItem>
+                      <EyeIcon /> View Participants
+                    </OptionItem>
+                  ),
+                  onClick: () => {
+                    router.push(`/participants`);
+                    setCookie(CookieType.EVENT_ID, record.id);
+                  },
+                },
+                {
+                  key: 2,
+                  label: (
+                    <OptionItem>
+                      <EditIcon /> Edit
+                    </OptionItem>
+                  ),
+                  onClick: () => router.push(`events/edit/${record.id}`),
+                },
+                {
+                  key: 3,
+                  label: (
+                    <OptionItem>
+                      <TrashIcon /> Delete
+                    </OptionItem>
+                  ),
+                  onClick: () => {},
+                },
+              ],
+            }}
+            trigger={["click"]}>
+            <OptionsButton>
+              <p>Action</p>
+              <ArrowDownIcon />
+            </OptionsButton>
+          </Dropdown>
         </Space>
       ),
     },
@@ -101,7 +119,13 @@ const SearchTable = () => {
         <StyledTable
           dataSource={dataSource}
           columns={columns}
-          pagination={false}
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: true,
+            pageSizeOptions: ["10", "20", "50"],
+            showQuickJumper: true,
+          }}
+          loading={isLoading}
         />
       </TableWrapper>
     </Container>
@@ -128,7 +152,7 @@ const ChartTitle = styled.p`
 const Container = styled.div`
   padding: 16px;
   width: 100%;
-  height: 438px;
+  height: max-content;
   border-radius: 15px;
   background: ${({ theme }) => theme.colors.background.light};
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08),
@@ -155,10 +179,10 @@ const StyledTable = styled(Table)`
   }
 
   .ant-table-tbody > tr > td,
-    .ant-table-thead > tr > th,
-    .ant-table {
-      font-size: 12px !important;
-    }
+  .ant-table-thead > tr > th,
+  .ant-table {
+    font-size: 12px !important;
+  }
 
   /* Responsive Design */
   @media (max-width: 768px) {
@@ -167,6 +191,18 @@ const StyledTable = styled(Table)`
     .ant-table {
       font-size: 10px !important;
     }
+  }
+`;
+
+const blinkAnimation = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 `;
 
@@ -180,44 +216,56 @@ const StatusTag = styled.div<{ $status: string }>`
   align-items: center;
   justify-content: center;
   background: ${({ theme, $status }) =>
-    $status.toLowerCase() === "completed"
-      ? theme.colors.darkGreen[400] :
-    $status.toLowerCase() === "ongoing"
+    $status.toLowerCase() === "closed"
+      ? theme.colors.darkGreen[400]
+      : $status.toLowerCase() === "ongoing"
       ? theme.colors.lightBlue[50]
       : theme.colors.orange[10]};
   color: ${({ theme, $status }) =>
-    $status.toLowerCase() === "completed"
-      ? theme.colors.text.tertiary :
-    $status.toLowerCase() === "ongoing"
+    $status.toLowerCase() === "closed"
+      ? theme.colors.text.tertiary
+      : $status.toLowerCase() === "ongoing"
       ? theme.colors.blue[700]
       : theme.colors.orange[350]};
   text-align: center;
+
+  // Apply the blink animation if the status is "ongoing"
+  ${({ $status }) =>
+    $status.toLowerCase() === "ongoing" &&
+    css`
+      animation: ${blinkAnimation} 2s infinite;
+    `}
 `;
 
-const ActionButton = styled.button`
+export const OptionItem = styled.button`
+  color: ${({ theme }) => theme.colors.gray[700]};
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  svg {
+    width: 15px;
+    margin-right: 9px;
+  }
+  cursor: pointer;
+  border: none;
+  background: none;
+`;
+
+export const OptionsButton = styled.button`
   display: flex;
   border-radius: 16px;
-  background: ${({ theme }) => theme.colors.background.light};
+  background: ${({ theme }) => theme.colors.blue[50]};
+  min-width: 71px;
+  height: 28px;
   align-items: center;
   cursor: pointer;
   border: none;
   margin-right: 10px;
-  @media (max-width: 768px) {
-    .iconText {
-      display: none;
-    }
-  }
-
   p {
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: ${({ theme }) => theme.colors.blue[700]};
     margin-left: 8px;
   }
-
-  svg {
-    stroke: ${({ theme }) => theme.colors.blue[700]};
-  }
+  position: relative;
 `;
-
-
 
 export default SearchTable;

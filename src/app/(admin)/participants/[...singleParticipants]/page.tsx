@@ -3,16 +3,43 @@ import { Header } from "@/components";
 import styled from "styled-components";
 import { DatePicker } from "antd";
 import { FileUploader } from "@/components/fileUploader";
+import { useUploadContentMutation } from "@/redux/api/events";
+import { useCreateParticipantMutation, useGetSingleParticpantQuery } from "@/redux/api/participants";
+import { useFormik } from "formik";
+import { useMemo } from "react";
 
 export default function CreateEditParticpants({
   params: {
    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    singleParticipants: [pageName, categoryId],
+    singleParticipants: [pageName, dynamicId],
   },
 }: {
   params: { singleParticipants: string[] };
 }) {
   const isEdit = pageName === "edit";
+  const editId = useMemo(() => {
+    return isEdit ? dynamicId : ""
+  }, [isEdit]) 
+
+  const [uploadContent, {isLoading}] = useUploadContentMutation()
+  const [createParticipants, {isLoading: isCreating}] = useCreateParticipantMutation()
+  const {data, isLoading: isGettingParticipants} = useGetSingleParticpantQuery(editId)
+
+  const editParticipants = (data: any) => {
+
+  }
+
+  const {values, setFieldValue, handleChange, handleSubmit} = useFormik({
+    initialValues: {
+      name: data?.data?.name ?? "",
+      alias: data?.data?.alias ?? "",
+      phoneNumber: data?.data?.phoneNumber ?? "",
+      address: data.data?.address ?? "",
+    },
+    onSubmit: () => {},
+    enableReinitialize: true,
+  })
+
   return (
     <Wrapper>
       <Header title="Create Events" websiteUrl="Upload Details for Karoke Event" />

@@ -14,6 +14,7 @@ export interface EventsResponse {
   status: "UPCOMING" | "ONGOING" | "COMPLETED"; // Extend this as needed for other statuses.
   createdAt: string;
   updatedAt: string;
+  description: string; 
 }
 
 

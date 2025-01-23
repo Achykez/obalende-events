@@ -1,11 +1,14 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import styled from "styled-components";
 import ParticipantsTable from "./components/searchTable";
 import { Button, Header } from "@/components";
 import { useRouter } from "next/navigation";
 import { AddIcon } from "@/assets";
+import { useGetEventParticipantQuery } from "@/redux/api/participants";
+import { getCookie } from "cookies-next";
+import { CookieType } from "@/enums";
 
 type CardProp = {
   title: string;
@@ -29,6 +32,12 @@ const Card: FC<CardProp> = ({ title, value, subTitle, subTitleValue }) => {
 
 export default function Participants() {
   const router = useRouter();
+  const id = useMemo(() => {
+    const cookie = getCookie(CookieType.EVENT_ID);
+    return cookie ? cookie : "";
+  }, []);
+
+  const { data, isLoading } = useGetEventParticipantQuery(id);
   return (
     <PageWrapper>
       <Header title="Participants" websiteUrl="Participants for " />
@@ -56,14 +65,14 @@ export default function Participants() {
         <ButtonWrapper>
           <StyledButtons text="Add to Upcoming Event" disabled />
           <StyledButtons
-            onClick={() => router.push("/participants/create")}
+            onClick={() => router.push(`/participants/create/${id}`)}
             text="Add Participants"
             leftIcon={<AddIcon />}
           />
         </ButtonWrapper>
 
         <BottomWrapper>
-          <ParticipantsTable />
+          <ParticipantsTable data={data?.data} loading={isLoading} id={id}/>
         </BottomWrapper>
       </Content>
     </PageWrapper>
@@ -84,6 +93,10 @@ const ButtonWrapper = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   gap: 8px;
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
+
 `;
 
 const StyledButtons = styled(Button)`
@@ -94,7 +107,7 @@ const StyledButtons = styled(Button)`
   svg {
     width: 22px;
     height: 22px;
-    stroke: ${({theme}) => theme.colors.text.tertiary}
+    stroke: ${({ theme }) => theme.colors.text.tertiary};
   }
 `;
 const Content = styled.div`

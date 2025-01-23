@@ -1,46 +1,35 @@
-import React, { useState } from "react";
-import { Space, Table, Breakpoint } from "antd";
+import React, { useState, FC, useMemo } from "react";
+import { Space, Table, Breakpoint, Dropdown } from "antd";
 import styled from "styled-components";
-import { EyeIcon } from "@/assets";
+import { ArrowDownIcon, EyeIcon } from "@/assets";
 import { EditIcon } from "@/assets/icons/edit-icon";
 import { TrashIcon } from "@/assets/icons/trash-icon";
 import { useRouter } from "next/navigation";
+import { IParticipant } from "@/redux/api/participants";
 
-const Participants = () => {
+interface IProps {
+  data?: IParticipant[];
+  loading?: boolean;
+  id: string;
+}
+const Participants: FC<IProps> = ({ data, loading }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const router = useRouter();
-  const dataSource = [
-    {
-      key: "1",
-      name: "John Doe",
-      phoneNumber: "1234567890",
-      votes: 10,
-      status: "Delivered",
-    },
-    {
-      key: "1",
-      name: "John Doe",
-      phoneNumber: "1234567890",
-      votes: 10,
-      status: "Delivered",
-    },
-    {
-      key: "1",
-      name: "John Doe",
-      phoneNumber: "1234567890",
-      votes: 10,
-      status: "Delivered",
-    },
-    {
-      key: "1",
-      name: "John Doe",
-      phoneNumber: "1234567890",
-      votes: 10,
-      status: "Delivered",
-    },
-    // Add more rows as needed
-  ];
+
+  const dataSource = useMemo(() => {
+    return (
+      data?.map((item) => {
+        return {
+          key: item._id,
+          name: item.name,
+          phoneNumber: item.phoneNumber,
+          votes: item.votes ?? "",
+          status: item.suspended ? "inactive" : "active",
+        };
+      }) ?? []
+    );
+  }, [data]);
 
   const columns = [
     {
@@ -72,18 +61,45 @@ const Participants = () => {
       key: "action",
       render: (_: string, record: any) => (
         <Space size="middle">
-          <ActionButton
-            onClick={() => router.push(`/eshop/orders/${record.id}`)}>
-            <EyeIcon />
-            <p className="iconText">View</p>
-          </ActionButton>
-          <ActionButton>
-            <EditIcon /> <p className="iconText">Edit</p>
-          </ActionButton>
-          <ActionButton>
-            <TrashIcon />
-            <p className="iconText">Delete</p>
-          </ActionButton>
+          <Dropdown
+            placement="bottomLeft"
+            menu={{
+              items: [
+                {
+                  key: 1,
+                  label: (
+                    <OptionItem>
+                      <EyeIcon /> View Details
+                    </OptionItem>
+                  ),
+                  onClick: () => {},
+                },
+                {
+                  key: 2,
+                  label: (
+                    <OptionItem>
+                      <EditIcon /> Edit
+                    </OptionItem>
+                  ),
+                  onClick: () => router.push(`participant/edit/${record.id}`),
+                },
+                {
+                  key: 3,
+                  label: (
+                    <OptionItem>
+                      <TrashIcon /> Delete
+                    </OptionItem>
+                  ),
+                  onClick: () => {},
+                },
+              ],
+            }}
+            trigger={["click"]}>
+            <OptionsButton>
+              <p>Action</p>
+              <ArrowDownIcon />
+            </OptionsButton>
+          </Dropdown>
         </Space>
       ),
     },
@@ -104,8 +120,14 @@ const Participants = () => {
         <StyledTable
           dataSource={dataSource}
           columns={columns}
-          pagination={false}
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: true,
+            pageSizeOptions: ["10", "20", "50"],
+            showQuickJumper: true,
+          }}
           rowSelection={rowSelection}
+          loading={loading}
         />
       </TableWrapper>
 
@@ -193,40 +215,47 @@ const StatusTag = styled.div<{ status: string }>`
   align-items: center;
   justify-content: center;
   background: ${({ theme, status }) =>
-    status.toLowerCase() === "completed"
-      ? theme.colors.darkGreen[400] :
-    status.toLowerCase() === "ongoing"
+    status.toLowerCase() === "active"
+      ? theme.colors.darkGreen[400]
+      : status.toLowerCase() === "inactive"
       ? theme.colors.lightBlue[50]
       : theme.colors.orange[10]};
   color: ${({ theme, status }) =>
-    status.toLowerCase() === "completed"
-      ? theme.colors.text.tertiary :
-    status.toLowerCase() === "ongoing"
+    status.toLowerCase() === "active"
+      ? theme.colors.text.tertiary
+      : status.toLowerCase() === "inactive"
       ? theme.colors.blue[700]
       : theme.colors.orange[350]};
   text-align: center;
 `;
 
-const ActionButton = styled.button`
+export const OptionItem = styled.button`
+  color: ${({ theme }) => theme.colors.gray[700]};
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  svg {
+    width: 15px;
+    margin-right: 9px;
+  }
+  cursor: pointer;
+  border: none;
+  background: none;
+`;
+
+export const OptionsButton = styled.button`
   display: flex;
   border-radius: 16px;
-  background: ${({ theme }) => theme.colors.background.light};
+  background: ${({ theme }) => theme.colors.blue[50]};
+  min-width: 71px;
+  height: 28px;
   align-items: center;
   cursor: pointer;
   border: none;
   margin-right: 10px;
-  @media (max-width: 768px) {
-    .iconText {
-      display: none;
-    }
-  }
-
   p {
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: ${({ theme }) => theme.colors.blue[700]};
     margin-left: 8px;
   }
-
-  svg {
-    stroke: ${({ theme }) => theme.colors.blue[700]};
-  }
+  position: relative;
 `;

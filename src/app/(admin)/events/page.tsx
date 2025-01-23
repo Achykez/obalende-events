@@ -6,6 +6,7 @@ import SearchTable from "./components/searchTable";
 import { Header, Button } from "@/components";
 import { useRouter } from "next/navigation";
 import { AddIcon } from "@/assets";
+import { useGetEventsQuery } from "@/redux/api/events";
 
 type CardProp = {
   title: string;
@@ -29,6 +30,7 @@ const Card: FC<CardProp> = ({ title, value, subTitle, subTitleValue }) => {
 
 export default function EventsPage() {
   const router = useRouter();
+  const { data, isLoading } = useGetEventsQuery();
   return (
     <PageWrapper>
       <Header title="Events" websiteUrl="Obalende Karaoke Events" />
@@ -69,7 +71,7 @@ export default function EventsPage() {
         </ButtonWrapper>
 
         <BottomWrapper>
-          <SearchTable />
+          <SearchTable data={data?.data} isLoading={isLoading} />
         </BottomWrapper>
       </Content>
     </PageWrapper>
@@ -104,30 +106,7 @@ const Content = styled.div`
   }
 `;
 
-// const CardsWrapper = styled.div`
-//   display: flex;
-//   flex-wrap: nowrap;
-//   gap: 16px;
-//   overflow-x: auto;
-//   padding-bottom: 16px;
 
-//   @media (min-width: 768px) {
-//     justify-content: space-between;
-//     flex-wrap: wrap;
-//     overflow-x: unset;
-//   }
-// `;
-
-// const CardWrapper = styled.div`
-//   border-radius: 15px;
-//   background: ${({ theme }) => theme.colors.background.light};
-//   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.08),
-//     0px 0px 0px 1px rgba(0, 0, 0, 0.08);
-//   width: 100%;
-//   max-width: 300px;
-//   height: 144px;
-//   padding: 16px;
-// `;
 
 const CardTitle = styled.p`
   color: ${({ theme }) => theme.colors.neutral[500]};

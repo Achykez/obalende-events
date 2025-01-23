@@ -7,21 +7,21 @@ const participantsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createParticipant: builder.mutation<Response, IParticipantPayload>({
       query: (payload) => ({
-        url: "/event/create",
+        url: "/participant/add",
         method: "POST",
         data: payload,
       }),
       invalidatesTags: [{ type: tagTypes.EVENTS }],
     }),
-    getSingleParticpant: builder.query<ApiResponse<IParticipant>, void>({
-      query: () => ({
-        url: "/event/create",
+    getSingleParticpant: builder.query<Response<IParticipant>, string>({
+      query: (id) => ({
+        url: `/participant/${id}`,
         method: "GET",
       }),
     }),
-    getEventParticipant: builder.query<ApiResponse<IParticipant[]>, string>({
+    getEventParticipant: builder.query<ApiResponse<IParticipant>, string>({
       query: (credentials) => ({
-        url: `participant/${credentials}/event`,
+        url: `/participant/${credentials}/event`,
         method: "GET",
       }),
       providesTags: [

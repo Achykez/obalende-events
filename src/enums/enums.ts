@@ -4,4 +4,5 @@ export enum CookieType {
   TOKEN = 'token',
   USER = 'user',
   RENEW_TOKEN = 'renew-token',
+  EVENT_ID = 'event-id',
 }

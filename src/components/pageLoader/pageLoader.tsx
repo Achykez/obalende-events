@@ -35,6 +35,7 @@ const Container = styled.div`
   width: 100%;
   height: 100dvh;
   font-family: 'OregonDry', sans-serif;
+  background-color: transparent;
 `;
 
 const ObalendeText = styled.div`
@@ -68,22 +69,7 @@ const FlameIcon = styled.span`
 `;
 
 // Flame SVG
-const FlameSVG = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="32"
-    height="32"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="red"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 2c1.5 1.5 4 4 4 7 0 3-2 5-4 5s-4-2-4-5c0-3 2.5-5.5 4-7z" />
-    <path d="M12 15c1.5-1.5 3-3 3-5s-1.5-3-3-3-3 1.5-3 3 1.5 3.5 3 5z" />
-  </svg>
-);
+
 
 export const PageLoader: React.FC = () => {
   const obalendeLetters = ["o", "b", "a", "l", "e", "n", "d", "e"];
@@ -96,9 +82,7 @@ export const PageLoader: React.FC = () => {
             {letter === "d" ? (
               <>
                 d
-                <FlameIcon>
-                  <FlameSVG />
-                </FlameIcon>
+             
               </>
             ) : (
               letter

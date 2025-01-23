@@ -1,5 +1,5 @@
 import { baseApi } from "@/redux/baseApi";
-import { EventsResponse, IEventsPayload} from "./interface";
+import { EventsResponse, IEventsPayload } from "./interface";
 import { ApiResponse, Response } from "@/redux/api/genericInterface";
 import { tagTypes } from "@/redux/baseApi/tagTypes";
 
@@ -10,21 +10,20 @@ const eventsApi = baseApi.injectEndpoints({
         url: "/event/create",
         method: "POST",
         data: payload,
-     
       }),
-      invalidatesTags: [{type: tagTypes.EVENTS}]
+      invalidatesTags: [{ type: tagTypes.EVENTS }],
     }),
     getEvents: builder.query<ApiResponse<EventsResponse>, void>({
       query: () => ({
-        url: "/event/create",
+        url: "/event",
         method: "GET",
-    
       }),
+      providesTags: [{ type: tagTypes.EVENTS }],
     }),
     uploadContent: builder.mutation<Response, FormData>({
-      query: credentials => ({
+      query: (credentials) => ({
         url: "/user/upload-images",
-        method: 'POST',
+        method: "POST",
         body: credentials,
       }),
     }),
@@ -34,8 +33,8 @@ const eventsApi = baseApi.injectEndpoints({
         method: "PUT",
         data: payload,
       }),
-      invalidatesTags: [{type: tagTypes.EVENTS}]
-    })
+      invalidatesTags: [{ type: tagTypes.EVENTS }],
+    }),
   }),
 });
 
@@ -44,5 +43,4 @@ export const {
   useUploadContentMutation,
   useGetEventsQuery,
   useUpdateEventsMutation,
-
 } = eventsApi;
