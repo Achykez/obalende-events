@@ -55,8 +55,8 @@ export const config = {
     "/events",
     "/participants",
     "/events/create",
-    "/events/create/:id*",
-    "/events/edit/:eventId*", // Protect dynamic edit route for events
+    "/events/edit/*",
+    "/participants/edit/*", // Protect dynamic edit route for events
     "/participants/create/:eventId", // Protect dynamic
     "/participants/edit/:participantId*", // Protect dynamic edit route for participants
   ],
