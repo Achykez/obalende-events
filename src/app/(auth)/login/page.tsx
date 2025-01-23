@@ -15,20 +15,40 @@ import {
 } from "@/app/(auth)/styled-components";
 import { AppLogo } from "@/assets";
 import { InputWithIcon, Input } from "@/components/input";
+import { ONE_DAY_SECONDS } from "@/config";
+import { CookieType } from "@/enums";
+import { useLoginMutation } from "@/redux/api/auth";
+import { setCookie } from "cookies-next";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 const Login = () => {
   const router = useRouter();
+  const [login, { isLoading }] = useLoginMutation();
 
+  const onSubmit = (data: any) => {
+    login(data)
+      .unwrap()
+      .then((res) => {
+        setCookie(CookieType.TOKEN, res.token, { maxAge: ONE_DAY_SECONDS });
+
+        toast.success("Logged in successfully!");
+        router.push("/admin-page");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
   const { values, handleSubmit, handleChange } = useFormik({
     initialValues: {
       email: "",
       password: "",
-      verifyme: true,
+      // verifyme: true,
     },
-    onSubmit: () => {},
+    onSubmit,
   });
+
   return (
     <AuthPageContainer>
       <AuthPageContent>
@@ -65,7 +85,7 @@ const Login = () => {
               Forgot Password?
             </FlatButton>
           </AuthPageFlexbox>
-          <AuthPageButton text={"Login"} type="submit" />
+          <AuthPageButton isLoading={isLoading} text={"Login"} type="submit" />
         </InputsWrap>
         <Box>
           <AuthPageText>

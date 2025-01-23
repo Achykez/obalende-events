@@ -18,6 +18,27 @@ const Participants = () => {
       votes: 10,
       status: "Delivered",
     },
+    {
+      key: "1",
+      name: "John Doe",
+      phoneNumber: "1234567890",
+      votes: 10,
+      status: "Delivered",
+    },
+    {
+      key: "1",
+      name: "John Doe",
+      phoneNumber: "1234567890",
+      votes: 10,
+      status: "Delivered",
+    },
+    {
+      key: "1",
+      name: "John Doe",
+      phoneNumber: "1234567890",
+      votes: 10,
+      status: "Delivered",
+    },
     // Add more rows as needed
   ];
 
