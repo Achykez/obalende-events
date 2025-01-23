@@ -20,11 +20,10 @@ export default function Main() {
           padding:"10px"
         }}
       >
-        <OngoingHandler />
+        <OngoingHandler/>
       </div>
       <div className={styles.mainHeaderContainer}>
         <h2>Upcoming Events</h2>
-        {/* <p>See All</p> */}
       </div>
       <div
         className={styles.mainBodyContainer}

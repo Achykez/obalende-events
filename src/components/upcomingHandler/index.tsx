@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react'
 import Location from '@/assets/icons/location'
@@ -7,12 +8,18 @@ import backgroundImage from '@/assets/images/image 84.png';
 import slides from '@/assets/images/Group.png'
 import styles from './styles.module.css'
 import { UpcomingProps } from './index.types';
+import { useRouter } from 'next/navigation'
+
 
 export default function UpComingHandler(props:UpcomingProps) {
 const {title,image, location,number} = props;
+    const router = useRouter();
 
+const toDetailPage = () => {
+    router.push('/karoke-events');
+}
   return (
-    <div className={styles.MainContainer}>
+    <div className={styles.MainContainer} onClick={toDetailPage}>
         <div className={styles.ImageContainer}>
             <Image style={{borderRadius:"18px"}} className={styles.mainImage} src={image} alt='' fill/>
         </div>

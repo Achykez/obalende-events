@@ -1,0 +1,112 @@
+.mainBody{
+    padding: 10px 24px 10px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.header{
+    width: 313px;
+}
+
+.header h2{
+    color: var(--Color-Typography-Title, #120D26);
+font-size: 35px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.header p {
+    color: var(--Color-Typography-Title, #120D26);
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.timeContainer{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.timeContainer div h2{
+    color: var(--Color-Typography-Title, #120D26);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 34px;
+}
+
+.middleContainer{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 20px;
+}
+.timeContainer div p{
+    color: var(--Color-Typography-Sub-Color, #747688);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.descriptionContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex:1;
+}
+
+.descriptionHeader div h2 {
+    color: var(--Color-Typography-Title, #120D26);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 34px;
+}
+
+.work {
+    color: #120D26;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; /* 175% */
+}
+
+.calenderIcon {
+    border-radius: 12px;
+    padding: 5px;
+    background: rgba(86, 105, 255, 0.5); 
+  }
+
+.button {
+    background-color: #007BFF; 
+    color: #fff; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 16px; 
+    border: none; 
+    border-radius: 6px; 
+    font-size: 16px;
+    font-weight: 500; 
+    cursor: pointer; 
+  }
+  
+  .button:hover {
+    background-color: #0056b3; 
+  }
+  
+  .button svg {
+    margin-left: 8px; 
+  }
+  
+  .participants{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    height:300px;
+    overflow-y: scroll;
+    padding:10px;
+  }

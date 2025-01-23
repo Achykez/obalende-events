@@ -5,15 +5,14 @@ import ArrowLeft from "@/assets/icons/arrowLeft";
 import BackgroundImage from "@/assets/images/image 77.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import DisplayModal from "../modal";
 
-export default function KarokeHeader() {
 
-  const router = useRouter(); 
-
-  const backTOPrev =() => {
-    router.back();
-  };
+export default function OngoingHeader() {
+      const router = useRouter(); 
+    
+      const backTOPrev = () => {
+        router.back();
+      };
 
   return (
     <>
@@ -23,24 +22,20 @@ export default function KarokeHeader() {
             <ArrowLeft />
           </div>
           <div>
-            <p>Event Details</p>
+            <p>ongoing Details</p>
           </div>
         </div>
         <div className={styles.absoluteImage}>
           <Image src={BackgroundImage} alt="background-image" fill />
           <div
             style={{
-              position: "absolute",
+              position:"absolute",
               inset: 0,
-              background:
-                "linear-gradient(180deg, rgba(255, 255, 255, 0.00) 33.2%, rgba(0, 0, 0, 0.65) 73.83%)",
+              background:"linear-gradient(180deg, rgba(255, 255, 255, 0.00) 33.2%, rgba(0, 0, 0, 0.65) 73.83%)",
             }}
           />
         </div>
       </div>
-      <div className={styles.modalContainer}>
-        <DisplayModal />
-      </div>
     </>
-  );
+  )
 }

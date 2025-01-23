@@ -1,0 +1,42 @@
+
+.mainContainer{
+    width:100%;
+    height: 120px;
+    padding:10px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #FFF;
+    box-shadow: 0px 8px 25px 0px rgba(83, 89, 144, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ImageContainer{
+    width:100%;
+    height:100%;
+    position: relative;
+}
+
+.DetailsContainer{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    width: 100%;
+};
+
+.header {
+    color: var(--Color-Typography-Title, #120D26);
+    font-family: "Airbnb Cereal App";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+    
+}
+
+.voteContainer{
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+}

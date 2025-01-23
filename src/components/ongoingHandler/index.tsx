@@ -1,14 +1,20 @@
+'use client'
 import React from 'react'
 import styles from './styles.module.css'
 import Image from 'next/image'
 import slides from '@/assets/images/Group.png'
 import Location from '@/assets/icons/location'
 import BackgroundImage from "@/assets/images/image 84.png";
+import { useRouter } from 'next/navigation'
 
 export default function OngoingHandler() {
+    const router = useRouter();
 
+const toDetailPage = () => {
+    router.push('/ongoing-events');
+}
   return (
-    <div className={styles.MainContainer}>
+    <div className={styles.MainContainer} onClick={toDetailPage}>
         <div className={styles.ImageContainer}>
             <Image style={{borderRadius:"18px"}} className={styles.mainImage} src={BackgroundImage} alt='' fill/>
         </div>
