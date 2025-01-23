@@ -25,3 +25,12 @@ export interface PaginatedResponse<T> {
   };
   status: number;
 }
+
+
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T[];
+}
+
+// Example usage

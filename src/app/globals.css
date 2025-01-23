@@ -56,3 +56,28 @@ h1 h2 h3 p {
   font-family: "Nunito Sans" !important;
 
 }
+
+.not_allowed {
+  display: flex !important;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  @media (max-width: 769px) {
+    display: none !important;
+  }
+  .title {
+    color: #000;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+  }
+  .paragraph {
+    color: #000;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 500;
+  }
+}

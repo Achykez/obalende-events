@@ -1,4 +1,6 @@
 export const tagTypes = {
-  RECOMMENDATIONS: 'Recommendations',
-  PREFERENCES: 'Preferences',
+  RECOMMENDATIONS: "Recommendations",
+  PREFERENCES: "Preferences",
+  EVENTS: "Events",
+  PARTICIPANTS: "Participants",
 };

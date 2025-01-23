@@ -61,7 +61,7 @@ export default function KarokeBody() {
                 justifyContent:"center"
             }}
           >
-            Buy Ticket $120
+           Click To Participate
             <ArrowBlueRight /> 
           </Button>
         </div>

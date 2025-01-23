@@ -1,7 +1,7 @@
 import { baseApi } from "@/redux/baseApi";
-import { IEventsPayload} from "./interface";
-import { Response } from "@/redux/api/genericInterface";
-import { createFormData } from "@/utils";
+import { EventsResponse, IEventsPayload} from "./interface";
+import { ApiResponse, Response } from "@/redux/api/genericInterface";
+import { tagTypes } from "@/redux/baseApi/tagTypes";
 
 const eventsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -9,26 +9,40 @@ const eventsApi = baseApi.injectEndpoints({
       query: (payload) => ({
         url: "/event/create",
         method: "POST",
-        data: createFormData(payload),
-        headers: {
-          "Content-Type": "multipart/form-data", // Required for FormData
-        },
+        data: payload,
+     
       }),
+      invalidatesTags: [{type: tagTypes.EVENTS}]
     }),
-    getEvents: builder.query<Response, IEventsPayload>({
-      query: (payload) => ({
+    getEvents: builder.query<ApiResponse<EventsResponse>, void>({
+      query: () => ({
         url: "/event/create",
         method: "GET",
-        data: createFormData(payload),
-        headers: {
-          "Content-Type": "multipart/form-data", // Required for FormData
-        },
+    
       }),
     }),
+    uploadContent: builder.mutation<Response, FormData>({
+      query: credentials => ({
+        url: "/user/upload-images",
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    updateEvents: builder.mutation<Response, Partial<IEventsPayload>>({
+      query: (payload) => ({
+        url: `/event/update`,
+        method: "PUT",
+        data: payload,
+      }),
+      invalidatesTags: [{type: tagTypes.EVENTS}]
+    })
   }),
 });
 
 export const {
   useCreateEventMutation,
+  useUploadContentMutation,
+  useGetEventsQuery,
+  useUpdateEventsMutation,
 
 } = eventsApi;

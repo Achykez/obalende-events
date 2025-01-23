@@ -1,4 +1,6 @@
+import { AppLogo } from "@/assets";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -22,8 +24,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="user">
-        {children}
-    </div>
+    <>
+      <div className="not_allowed">
+        <div>
+          <Image src={AppLogo} alt="Not Allowed" height={250} width={250} />
+        </div>
+        <p className="title">This site doesn&apos;t support desktop view yet</p>
+        <p className="paragraph">Please view on your mobile phone</p>
+      </div>
+      <div className="user">{children}</div>
+    </>
   );
 }
