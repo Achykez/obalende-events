@@ -3,7 +3,7 @@ import KarokeHeader from './karoke-header'
 import KarokeBody from './karoke-body'
 const page = () => {
   return (
-    <div>
+    <div style={{display:"flex", flexDirection:"column",gap:'40px'}}>
       <KarokeHeader/>
       <KarokeBody/>
     </div>
