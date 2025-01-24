@@ -6,7 +6,7 @@ import { DatePicker } from "antd";
 import { FileUploader } from "@/components/fileUploader";
 import { Formik, Field, Form } from "formik";
 import dayjs from "dayjs";
-import { useCreateEventMutation } from "@/redux/api/events";
+import { useCreateEventMutation, useUploadContentMutation } from "@/redux/api/events";
 import { validationSchema } from "./validator";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -22,19 +22,21 @@ export default function CreateEditEvents({
   const router = useRouter();
 
   const [createEvent, { isLoading }] = useCreateEventMutation();
+  const [uploadContent, { isLoading : isUploading }] = useUploadContentMutation();
 
   const onSubmit = (values: any) => {
 
     console.log(values);
     
     const formattedValues = {
-      ...values,
       startTime: values.startTime
         ? dayjs(values.endTime).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
         : null,
       endTime: values.endTime
         ? dayjs(values.endTime).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
         : null,
+          name: values.name,
+          image : typeof values.image === "string" ? values.image : ''
     };
     createEvent(formattedValues)
       .unwrap()

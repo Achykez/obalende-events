@@ -1,5 +1,4 @@
 export interface IEventsPayload {
-  [key: string]: unknown;
   name: string;
   startTime: string;
   endTime: string;
