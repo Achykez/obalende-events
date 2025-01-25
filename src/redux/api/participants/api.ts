@@ -3,6 +3,7 @@ import {
   IEditParticipant,
   IParticipant,
   IParticipantPayload,
+  IUnverifiedParticipantPayload,
   IVoteParticipant,
 } from "./interface";
 import { ApiResponse, Response } from "@/redux/api/genericInterface";
@@ -13,6 +14,14 @@ const participantsApi = baseApi.injectEndpoints({
     createParticipant: builder.mutation<Response, IParticipantPayload>({
       query: (payload) => ({
         url: "/participant/add",
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: [{ type: tagTypes.EVENTS }],
+    }),
+    createUnverifiedParticipant: builder.mutation<Response, IUnverifiedParticipantPayload>({
+      query: (payload) => ({
+        url: "/participant/add-external",
         method: "POST",
         data: payload,
       }),
@@ -71,4 +80,5 @@ export const {
   useUpdateParticipantMutation,
   useDeleteParticipantMutation,
   useVoteParticipantsMutation,
+  useCreateUnverifiedParticipantMutation,
 } = participantsApi;

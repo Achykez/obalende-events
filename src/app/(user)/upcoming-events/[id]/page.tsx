@@ -3,21 +3,11 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import dynamic from "next/dynamic";
-import { Spin } from "antd";
+import { PageLoader } from "@/components/pageLoader/pageLoader";
 
 const UpcomingEvent = dynamic(() => import("./index"), {
   ssr: false,
-  loading: () => (
-    <div
-      style={{
-        display: "flex",
-        height: "100dvh",
-        width: "100%",
-        alignItems: "center",
-      }}>
-      <Spin spinning size="default" />
-    </div>
-  ),
+  loading: () => <PageLoader />,
 });
 const page = ({ params: { id } }: { params: { id: string } }) => {
   if (!id) {

@@ -24,7 +24,7 @@ const UpcomingEvent: FC<IProps> = ({ id }) => {
   const handleShare = () => {
     setInfo({
       url: `${WEB_URL}/upcoming-events/${eventDetails?.event._id}`,
-      title: eventDetails?.event.name,
+      title: `Invitation to join ${eventDetails?.event.name}`,
     });
   };
 

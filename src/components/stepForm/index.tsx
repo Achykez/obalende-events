@@ -7,7 +7,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useUploadContentMutation } from "@/redux/api/events";
 import {
+  IUnverifiedParticipantPayload,
   IVoteParticipant,
+  useCreateUnverifiedParticipantMutation,
   useVoteParticipantsMutation,
 } from "@/redux/api/participants";
 import { toast } from "react-toastify";
@@ -33,6 +35,22 @@ const validationSchemaStep1 = Yup.object({
   address: Yup.string().required("Please enter your address"),
   phone: Yup.string().required("Please enter your phone number"),
   alias: Yup.string().required("Please enter an alias"),
+  avatar: Yup.mixed()
+    .required("Please upload an image")
+    .test(
+      "fileType",
+      "Only image files are allowed",
+      (value) =>
+        value &&
+        value instanceof File &&
+        value.type &&
+        ["image/jpeg", "image/png", "image/jpg"].includes(value.type)
+    )
+    .test(
+      "fileSize",
+      "File size is too large, maximum 2MB",
+      (value) => value && value instanceof File && value.size <= 2 * 1024 * 1024
+    ),
 });
 
 const StepsContent = ({
@@ -52,6 +70,8 @@ const StepsContent = ({
     useUploadContentMutation();
   const [voteParticpant, { isLoading: isVoting }] =
     useVoteParticipantsMutation();
+  const [registerParticipant, { isLoading: isRegistering }] =
+    useCreateUnverifiedParticipantMutation();
   const uploadImage = async (file: File) => {
     const formData = new FormData();
 
@@ -68,7 +88,14 @@ const StepsContent = ({
 
   const formik = useFormik({
     initialValues: isEvent
-      ? { name: "", address: "", phone: "", alias: "", image: null }
+      ? {
+          name: "",
+          address: "",
+          phone: "",
+          alias: "",
+          avatar: null,
+          image: null,
+        }
       : { votes: 0, image: null },
     validationSchema:
       currentStep === 0 && isEvent ? validationSchemaStep1 : null,
@@ -86,15 +113,30 @@ const StepsContent = ({
     },
   });
 
-  const handleEventSubmit = (values: any) => {
-    const payload = {
+  const handleEventSubmit = async (values: any) => {
+    const image = await uploadImage(values.avatar);
+    const proof = await uploadImage(values.image);
+    const payload: IUnverifiedParticipantPayload = {
       name: values.name,
       address: values.address,
-      phone: values.phone,
+      phoneNumber: values.phone,
       alias: values.alias,
-      image: values.image,
+      image,
+      proof,
+      eventId: dynamicId,
     };
-    // onSubmit(payload);
+    registerParticipant(payload)
+      .unwrap()
+      .then(() => {
+        toast.success(
+          "Participant registered successfully!, Please wait for confirmation"
+        );
+        close();
+        setCurrentStep(0);
+      })
+      .catch(() => {
+        toast.error("Error registering participant");
+      });
   };
 
   const handleNonEventSubmit = async (values: any) => {
@@ -107,8 +149,11 @@ const StepsContent = ({
     voteParticpant(payload)
       .unwrap()
       .then(() => {
-        toast.success("Vote submitted successfully!");
+        toast.success(
+          "Vote submitted successfully! please wait for confirmation"
+        );
         close();
+        setCurrentStep(0);
       })
       .catch(() => {
         toast.error("Failed to submit vote.");
@@ -149,7 +194,7 @@ const StepsContent = ({
         style={{
           display: "flex !important",
           flexDirection: "row",
-          marginTop: "10px"
+          marginTop: "10px",
         }}>
         <Step title="Details" />
         <Step title="Upload" />
@@ -214,6 +259,23 @@ const StepsContent = ({
                   <p style={{ color: "red" }}>{formik.errors.alias}</p>
                 )}
               </div>
+
+              <StyledCard>
+                <p>Upload a profile picture:</p>
+                <FileInputWrapper>
+                  <input
+                    type="file"
+                    id="fileUpload"
+                    onChange={(e) =>
+                      formik.setFieldValue("avatar", e.target.files[0])
+                    }
+                  />
+                  <label htmlFor="fileUpload">Select Picture</label>
+                </FileInputWrapper>
+                {formik.values.avatar && (
+                  <StyledFileName>{formik.values.avatar.name}</StyledFileName>
+                )}
+              </StyledCard>
             </>
           ) : (
             <div>
@@ -273,8 +335,7 @@ const StepsContent = ({
               type="primary"
               htmlType="submit"
               disabled={!formik.values.image}
-              loading={isUploading || isVoting }
-              >
+              loading={isUploading || isVoting || isRegistering}>
               Submit
             </StyledButton>
           </form>

@@ -7,6 +7,10 @@ export interface IParticipantPayload {
   image?: string;
   // remember_me: boolean;
 }
+
+export interface IUnverifiedParticipantPayload extends IParticipantPayload {
+  proof: string;
+}
 export interface IParticipant {
   _id: string;
   name: string;

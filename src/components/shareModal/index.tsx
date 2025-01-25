@@ -1,5 +1,5 @@
-import { Modal } from 'antd';
-import React, { FC } from 'react';
+import { Modal } from "antd";
+import React, { FC } from "react";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -9,8 +9,8 @@ import {
   XIcon,
   LinkedinIcon,
   WhatsappIcon,
-} from 'react-share';
-import styled from 'styled-components';
+} from "react-share";
+import styled from "styled-components";
 
 interface Iprops {
   visible: boolean;
@@ -29,13 +29,11 @@ export const SocialMediaShare: FC<Iprops> = ({
     <Modal
       onCancel={onCancel}
       open={visible}
-      style={{ display: 'flex', gap: '20px' }}
+      style={{ display: "flex", gap: "20px" }}
       footer={[]}
-      title="Invite others to Participate"
+      title="Invite Friends"
       className="share-modal"
-      width={350}
-      
-    >
+      width={250}>
       <SocialBody className="share-modal">
         <FacebookShareButton url={url} title={title}>
           <FacebookIcon size={32} round />
