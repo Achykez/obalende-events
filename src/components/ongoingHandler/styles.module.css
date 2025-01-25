@@ -10,11 +10,7 @@
     box-shadow: 0px 8px 30px 0px rgba(80, 85, 136, 0.3);
 }
 
-.ImageContainer{
-    position: relative;
-    height: 181px;
-    margin: auto
-};
+
 
 .mainImage{
     position:absolute;
@@ -66,4 +62,106 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+
+
+.ImageContainer {
+    position: relative;
+    height: 200px;
+    margin: auto
+}
+
+;
+
+.mainImage {
+    position: absolute;
+    border-radius: 20px;
+}
+
+.TextContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 5px;
+    /* border: 1px solid blue; */
+}
+
+.firstTextContainer p {
+    color: #000;
+    /* font-family: "Roboto"; */
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.secondTextContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* border: 1px solid green; */
+}
+
+
+.secondTextContainer p {
+    color: #3F38DD;
+    /* font-family: "Roboto"; */
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+
+}
+
+/* w-[198px] h-[84px] flex flex-col gap-2 */
+
+.thirdTextContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* border: 1px solid yellow; */
+
+}
+
+.thirdTextContainer p {
+    color: #2B2849;
+    /* font-family: "Roboto"; */
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+
+.attendanst {
+    font-size: 12px;
+    font-weight: 600
+}
+
+.attendantsImage {
+    display: flex;
+
+}
+
+.attendantsImage img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid #DDDDDD;
+    margin-left: -5px;
+
+    /* Negative margin to create overlap */
+    &:first-child {
+        margin-left: 0;
+        /* No negative margin for the first image */
+    }
+
+}
+
+.firstContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

@@ -1,0 +1,42 @@
+/* CSS */
+.mainContainer {
+    width: 100%;
+    height: max-content;
+    padding: 20px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0px 8px 25px rgba(83, 89, 144, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.ImageContainer {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.DetailsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.header {
+    color: var(--Color-Typography-Title, #120D26);
+    font-family: "Airbnb Cereal App", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.voteContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

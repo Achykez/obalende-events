@@ -1,14 +1,23 @@
+"use client";
 import React from "react";
 import UpComingHandler from "@/components/upcomingHandler";
 import styles from "./main.module.css";
-import { upComingArray } from "@/components/constants/data";
 import OngoingHandler from "@/components/ongoingHandler";
+import { EventsResponse,  } from "@/redux/api/events";
+import { WEBSITE_DETAILS } from "@/config";
+import styled from "styled-components";
 
-export default function Main() {
+export default function Main({
+  upcomingData,
+  ongoingData
+}: {
+  upcomingData: EventsResponse[];
+  ongoingData: EventsResponse[];
+}) {
   return (
-    <div>
-          <div className={styles.mainHeaderContainer}>
-        <h2>Ongoing Events</h2>
+    <Wrapper>
+      <div className={styles.mainHeaderContainer}>
+        <h2>Ongoing Event</h2>
       </div>
       <div
         className={styles.mainBodyContainer}
@@ -17,10 +26,9 @@ export default function Main() {
           overflow: "scroll",
           alignItems: "center",
           gap: "20px",
-          padding:"10px"
-        }}
-      >
-        <OngoingHandler/>
+          padding: "10px",
+        }}>
+        <OngoingHandler data={ongoingData[0]}/>
       </div>
       <div className={styles.mainHeaderContainer}>
         <h2>Upcoming Events</h2>
@@ -32,20 +40,23 @@ export default function Main() {
           overflow: "scroll",
           alignItems: "center",
           gap: "20px",
-          padding:"10px"
-        }}
-      >
-        {upComingArray.map((Item, index) => (
+          padding: "10px",
+        }}>
+        {upcomingData?.map((Item, index) => (
           <UpComingHandler
             key={index}
-            title={Item.title}
-            number={Item.number}
-            location={Item.location}
-            image={Item.image}
+            title={Item.event.name}
+            location={WEBSITE_DETAILS.address}
+            id={Item.event._id}
+            image={Item.event.image}
+            data={Item.participants}
           />
         ))}
       </div>
-  
-    </div>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  padding: 10px 20px;
+`

@@ -4,8 +4,14 @@
     height:100%;
     display: flex;
     flex-direction: column;
+    height: 100dvh;
     gap:20px;
     font-family: "Nunito Sans" !important;
     /* border: 1px solid green; */
     padding: 10px;
+}
+
+.content {
+    overflow-y: scroll;
+    height: calc(100% - 150px);
 }

@@ -78,8 +78,7 @@ const Login = () => {
             </ChekBoxWrap>
 
             <FlatButton
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 router.push("/forgot-password");
               }}>
               Forgot Password?

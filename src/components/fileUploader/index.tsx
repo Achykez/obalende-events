@@ -34,10 +34,11 @@ interface FileUploadProps {
   onAltTextChange?: (text: string) => void;
   onImageLinkChange?: (text: string) => void;
   imgDimension?: string;
+  date?: string;
 }
 export const FileUploader: FC<FileUploadProps> = ({
   onEditImageUrl,
-
+  date,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSuccess,
   imgDimension,
@@ -73,7 +74,10 @@ export const FileUploader: FC<FileUploadProps> = ({
 
   const handleRemoveImage = () => {
     setFile(null);
+    setImageUrl("")
   };
+
+  const altDate = new Date(date).toLocaleDateString()
 
   return (
     <>
@@ -90,7 +94,12 @@ export const FileUploader: FC<FileUploadProps> = ({
           <MediaText2>{imgDimension}</MediaText2>
         </MediaWrap>
 
-        <FileView fileDetails={file} deleteFile={() => handleRemoveImage()} />
+        <FileView
+          date={altDate}
+          imageUrl={imageUrl}
+          fileDetails={file}
+          deleteFile={() => handleRemoveImage()}
+        />
       </ImageWrap>
     </>
   );

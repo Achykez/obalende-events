@@ -1,5 +1,5 @@
 .mainBody{
-    padding: 10px 38px 10px 24px;
+    padding: 10px 20px 10px 24px;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -9,6 +9,10 @@
     width: 313px;
 }
 
+.midbody {
+    height: calc(100dvh -100px); 
+    overflow-y: scroll;
+}
 .header h2{
     color: var(--Color-Typography-Title, #120D26);
 font-size: 35px;
@@ -58,6 +62,9 @@ line-height: normal;
     flex:1;
 }
 
+.descriptionHeader {
+    margin-top: 10px;
+}
 .descriptionHeader div h2 {
     color: var(--Color-Typography-Title, #120D26);
     font-size: 18px;
@@ -101,4 +108,12 @@ line-height: normal;
   .button svg {
     margin-left: 8px; 
   }
+
+  .modalContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   

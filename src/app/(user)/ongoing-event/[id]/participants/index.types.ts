@@ -1,7 +1,7 @@
 import { StaticImageData } from "next/image";
 
 export interface ParticipantsProps {
-    image : StaticImageData;
+    image : StaticImageData | string;
     name:string;
     alias:string;
     NOV:number

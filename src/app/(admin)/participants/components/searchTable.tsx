@@ -6,6 +6,8 @@ import { EditIcon } from "@/assets/icons/edit-icon";
 import { TrashIcon } from "@/assets/icons/trash-icon";
 import { useRouter } from "next/navigation";
 import { IParticipant } from "@/redux/api/participants";
+import CustomModal from "@/components/modal";
+import ParticipantDetails from "./viewParticipants";
 
 interface IProps {
   data?: IParticipant[];
@@ -15,6 +17,8 @@ interface IProps {
 const Participants: FC<IProps> = ({ data, loading }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [selectParticipant, setSelectedParticipant] =
+    useState<IParticipant | null>(null);
   const router = useRouter();
 
   const dataSource = useMemo(() => {
@@ -24,8 +28,11 @@ const Participants: FC<IProps> = ({ data, loading }) => {
           key: item._id,
           name: item.name,
           phoneNumber: item.phoneNumber,
-          votes: item.votes ?? "",
+          votes: item.votes ?? "0",
           status: item.suspended ? "inactive" : "active",
+          image: item.image ?? "",
+          alias: item.alias,
+          address: item.address,
         };
       }) ?? []
     );
@@ -72,7 +79,9 @@ const Participants: FC<IProps> = ({ data, loading }) => {
                       <EyeIcon /> View Details
                     </OptionItem>
                   ),
-                  onClick: () => {},
+                  onClick: () => {
+                    setSelectedParticipant(record);
+                  },
                 },
                 {
                   key: 2,
@@ -81,7 +90,8 @@ const Participants: FC<IProps> = ({ data, loading }) => {
                       <EditIcon /> Edit
                     </OptionItem>
                   ),
-                  onClick: () => router.push(`participant/edit/${record.id}`),
+                  onClick: () =>
+                    router.push(`/participants/edit/${record.key}`),
                 },
                 {
                   key: 3,
@@ -115,6 +125,20 @@ const Participants: FC<IProps> = ({ data, loading }) => {
 
   return (
     <Container>
+      {!!selectParticipant && (
+        <CustomModal
+          visible={!!selectParticipant}
+          title={`${selectParticipant.alias} Details`}
+          onAction={() => {
+            router.push(`participants/edit/${selectParticipant._id}`);
+          }}
+          onClose={() => {
+            setSelectedParticipant(null);
+          }}
+          actionText="Edit">
+          <ParticipantDetails participant={selectParticipant!} />
+        </CustomModal>
+      )}
       <ChartTitle>Participants</ChartTitle>
       <TableWrapper>
         <StyledTable

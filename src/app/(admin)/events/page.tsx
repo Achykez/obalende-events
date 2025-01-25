@@ -30,7 +30,7 @@ const Card: FC<CardProp> = ({ title, value, subTitle, subTitleValue }) => {
 
 export default function EventsPage() {
   const router = useRouter();
-  const { data, isLoading } = useGetEventsQuery();
+  const { data, isLoading } = useGetEventsQuery({});
   return (
     <PageWrapper>
       <Header title="Events" websiteUrl="Obalende Karaoke Events" />

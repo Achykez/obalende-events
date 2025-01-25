@@ -6,10 +6,18 @@ import { DatePicker } from "antd";
 import { FileUploader } from "@/components/fileUploader";
 import { Formik, Field, Form } from "formik";
 import dayjs from "dayjs";
-import { useCreateEventMutation, useUploadContentMutation } from "@/redux/api/events";
+import {
+  EventsResponse,
+  useCreateEventMutation,
+  useGetEventsQuery,
+  useUpdateEventsMutation,
+  useUploadContentMutation,
+} from "@/redux/api/events";
 import { validationSchema } from "./validator";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { getFileFromPath } from "@/utils";
+import { useMemo } from "react";
 
 export default function CreateEditEvents({
   params: {
@@ -22,31 +30,77 @@ export default function CreateEditEvents({
   const router = useRouter();
 
   const [createEvent, { isLoading }] = useCreateEventMutation();
-  const [uploadContent, { isLoading : isUploading }] = useUploadContentMutation();
+  const { data, isLoading: isGetting } = useGetEventsQuery({
+    id: eventsId,
+  });
 
-  const onSubmit = (values: any) => {
+  const [updateEvent, { isLoading: isUpdating }] = useUpdateEventsMutation();
 
-    console.log(values);
-    
-    const formattedValues = {
+  const singleEvents = useMemo(() => {
+    if (data?.data && eventsId) {
+      return data.data[0];
+    }
+    return null;
+  }, [data?.data, eventsId]);
+
+  const [uploadContent, { isLoading: isUploading }] =
+    useUploadContentMutation();
+
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+
+    formData.append("images", file);
+
+    const uploadResponse = await uploadContent(formData).unwrap();
+
+    if (uploadResponse?.success && uploadResponse.data) {
+      return uploadResponse.data[0];
+    } else {
+      toast.error("something went wrong");
+    }
+  };
+
+  const formatEventValues = async (values: any) => {
+    console.log(typeof values.image, "YEEP00000EE");
+
+    const formattedValues: any = {
       startTime: values.startTime
-        ? dayjs(values.endTime).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+        ? dayjs(values.startTime).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
         : null,
       endTime: values.endTime
         ? dayjs(values.endTime).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
         : null,
-          name: values.name,
-          image : typeof values.image === "string" ? values.image : ''
+      name: values.name,
+      description: values.description,
+      ...(isEdit  && {eventId : eventsId})
     };
-    createEvent(formattedValues)
-      .unwrap()
-      .then(() => {
-        toast.success("Event created successfully!");
-        router.push(`/events`);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+
+    // Check if the image is a file or already a URL
+    if (values.image && typeof values.image !== "string") {
+      formattedValues.image = await uploadImage(values.image);
+    } else {
+      formattedValues.image = values.image; // Use the existing URL
+    }
+
+    return formattedValues;
+  };
+
+  const onSubmit = async (values: any) => {
+    try {
+      const formattedValues = await formatEventValues(values);
+
+      if (isEdit) {
+        await updateEvent(formattedValues).unwrap();
+      } else {
+        await createEvent(formattedValues).unwrap();
+      }
+      toast.success(
+        isEdit ? "Event updated successfully!" : "Event created successfully!"
+      );
+      router.push(`/events`);
+    } catch (error: any) {
+      toast.error(error?.message || "An error occurred");
+    }
   };
 
   return (
@@ -59,12 +113,13 @@ export default function CreateEditEvents({
         <Container>
           <Formik
             initialValues={{
-              name: "",
-              description: "",
-              startTime: null,
-              endDate: null,
-              image: "",
+              name: singleEvents?.event.name || "",
+              description: singleEvents?.event.description || "",
+              startTime: singleEvents?.event.startTime || null,
+              endTime: singleEvents?.event.endTime || null,
+              image: singleEvents?.event.image || "",
             }}
+            enableReinitialize
             validationSchema={validationSchema}
             onSubmit={onSubmit}>
             {({
@@ -140,6 +195,8 @@ export default function CreateEditEvents({
                       <FileUploader
                         imageLink={true}
                         onSuccess={(url) => setFieldValue("image", url)}
+                        onEditImageUrl={values.image}
+                        date={singleEvents?.event.updatedAt ?? ""}
                       />
                       {touched.image && errors.image && (
                         <Error>{String(errors.image)}</Error>
@@ -148,7 +205,11 @@ export default function CreateEditEvents({
                   </SectionItem>
                 </FormContent>
                 <ButtonWrapper>
-                  <SubmitButton text="Submit" type="submit" />
+                  <SubmitButton
+                    isLoading={isLoading || isUploading || isUpdating}
+                    text="Submit"
+                    type="submit"
+                  />
                 </ButtonWrapper>
               </FormContainer>
             )}
@@ -224,7 +285,6 @@ const FormTextArea = styled.textarea`
   border: 1px solid ${({ theme }) => theme.colors.neutral[200]};
   padding: 12px 16px;
   color: ${({ theme }) => theme.colors.text.primary};
-
 `;
 
 const StyledDatePicker = styled(DatePicker)`
@@ -233,11 +293,30 @@ const StyledDatePicker = styled(DatePicker)`
   width: 100%;
   border-radius: 8px !important;
   background: ${({ theme }) => theme.colors.neutral[50]} !important;
+  width: 100%; /* Default width to make it responsive */
+  @media (max-width: 768px) {
+    font-size: 10px !important;
+  }
+
+  /* Customize the popup container of the calendar */
+
+  /* Customize DatePicker styles (optional) */
+  .ant-picker-input > input {
+    font-size: 1rem; /* Adjust input text size */
+  }
+
+  .ant-picker {
+    padding: 0.5rem; /* Adjust padding for better touch areas on small screens */
+  }
 `;
 
 const Flex = styled.div`
   display: flex;
   gap: 20px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 const SectionItem = styled.div`
@@ -269,4 +348,8 @@ const ButtonWrapper = styled.div`
   margin-top: 24px;
   display: flex;
   justify-content: flex-end;
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 10px;
+  }
 `;

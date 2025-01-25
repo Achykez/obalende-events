@@ -1,5 +1,9 @@
 import { baseApi } from "@/redux/baseApi";
-import { IParticipant, IParticipantPayload } from "./interface";
+import {
+  IEditParticipant,
+  IParticipant,
+  IParticipantPayload,
+} from "./interface";
 import { ApiResponse, Response } from "@/redux/api/genericInterface";
 import { tagTypes } from "@/redux/baseApi/tagTypes";
 
@@ -18,6 +22,7 @@ const participantsApi = baseApi.injectEndpoints({
         url: `/participant/${id}`,
         method: "GET",
       }),
+      providesTags: [{ type: tagTypes.PARTICIPANTS }],
     }),
     getEventParticipant: builder.query<ApiResponse<IParticipant>, string>({
       query: (credentials) => ({
@@ -31,12 +36,19 @@ const participantsApi = baseApi.injectEndpoints({
     }),
     updateParticipant: builder.mutation<
       ApiResponse<IParticipant>,
-      Partial<IParticipantPayload>
+      IEditParticipant
     >({
       query: (payload) => ({
         url: `/participant/update`,
-        method: "PUT",
+        method: "PATCH",
         data: payload,
+      }),
+      invalidatesTags: [{ type: tagTypes.PARTICIPANTS }],
+    }),
+    deleteParticipant: builder.mutation<ApiResponse<IParticipant>, string>({
+      query: (payload) => ({
+        url: `/participant/delete/${payload}`,
+        method: "DELETE",
       }),
       invalidatesTags: [{ type: tagTypes.PARTICIPANTS }],
     }),
@@ -48,4 +60,5 @@ export const {
   useGetSingleParticpantQuery,
   useGetEventParticipantQuery,
   useUpdateParticipantMutation,
+  useDeleteParticipantMutation,
 } = participantsApi;

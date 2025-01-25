@@ -1,8 +1,7 @@
 import { Spin } from "antd";
 import dynamic from "next/dynamic";
-import React from "react";
 
-const Home = dynamic(() => import("./home/home"), {
+const OngoingEvents = dynamic(() => import("./index"), {
   ssr: false,
   loading: () => (
     <div
@@ -16,8 +15,7 @@ const Home = dynamic(() => import("./home/home"), {
     </div>
   ),
 });
-const page = () => {
-  return <Home />;
-};
 
-export default page;
+export default function Page({ params: { id } }: { params: { id: string } }) {
+  return <OngoingEvents id={id} />;
+}

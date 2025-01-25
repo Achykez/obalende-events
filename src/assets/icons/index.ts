@@ -8,3 +8,4 @@ export * from "./log-out";
 export * from "./upload-icons";
 export * from "./add-icon";
 export * from "./left-circle-arrow"
+export * from "./calender"

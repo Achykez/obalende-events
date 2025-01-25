@@ -4,6 +4,7 @@ export interface IParticipantPayload {
   address: string;
   eventId: string;
   phoneNumber: string;
+  image?: string;
   // remember_me: boolean;
 }
 export interface IParticipant {
@@ -18,4 +19,9 @@ export interface IParticipant {
   suspended: boolean;
   createdAt: string; // Use Date if you prefer converting it to a Date object.
   updatedAt: string;
+}
+
+
+export interface IEditParticipant  extends IParticipantPayload{
+  id: string;
 }

@@ -16,30 +16,39 @@ interface FileDetails {
 interface Props {
   fileDetails: FileDetails | null;
   deleteFile: () => void;
+  imageUrl?: string;
+  date: string;
 }
 
-export const FileView: FC<Props> = ({ fileDetails, deleteFile }) => {
+export const FileView: FC<Props> = ({
+  fileDetails,
+  deleteFile,
+  imageUrl,
+  date,
+}) => {
   const fileUrl = useMemo(() => {
     return fileDetails ? URL.createObjectURL(fileDetails.file) : null;
   }, [fileDetails]);
 
-  if (!fileDetails) {
+  if (!fileDetails && !imageUrl) {
     return null;
   }
 
   return (
     <FileViewContainer>
       <ImagePreview>
-        <img src={fileUrl || ""} alt={fileDetails.file.name} />
+        <img src={fileUrl || imageUrl || ""} alt={fileDetails?.file.name ?? ""} />
       </ImagePreview>
       <FileDetails>
-        <Text>{fileDetails.file.name}</Text>
+        <Text>{fileDetails?.file.name}</Text>
         <Text>
           {`${dateTimeFormatter(
-            fileDetails.date,
+            fileDetails?.date ? fileDetails.date : date,
             "MMM D, YYYY"
-          )} | ${dateTimeFormatter(fileDetails.date, "HH:mm a")} • ${
-            fileDetails.file.size ? fileSizeInMegabytes(fileDetails.file.size) + "MB" : ""
+          )} | ${dateTimeFormatter(fileDetails?.date, "HH:mm a")} • ${
+            fileDetails?.file.size
+              ? fileSizeInMegabytes(fileDetails?.file.size) + "MB"
+              : ""
           }`}
         </Text>
       </FileDetails>
@@ -47,7 +56,11 @@ export const FileView: FC<Props> = ({ fileDetails, deleteFile }) => {
         <Flex className="pointer" onClick={deleteFile}>
           <DeleteIcon />
         </Flex>
-        <a href={fileUrl || "#"} target="_blank" download={fileDetails.file.name} rel="noopener noreferrer">
+        <a
+          href={fileUrl || imageUrl || "#"}
+          target="_blank"
+          download={fileDetails?.file.name}
+          rel="noopener noreferrer">
           <DownloadOutlined />
         </a>
       </Flex>
@@ -66,7 +79,7 @@ export const FileViewContainer = styled.div`
   border-radius: 8px;
   border: 1px solid #1c1c1e;
   @media (max-width: 400px) {
-    width: 100%
+    width: 100%;
   }
 `;
 

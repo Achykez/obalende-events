@@ -1,34 +1,67 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { Space, Table, Dropdown } from "antd";
 import styled, { css, keyframes } from "styled-components";
 import { ArrowDownIcon, EyeIcon } from "@/assets";
 import { EditIcon } from "@/assets/icons/edit-icon";
 import { TrashIcon } from "@/assets/icons/trash-icon";
-import { EventsResponse } from "@/redux/api/events";
+import {
+  EventsResponse,
+  IEventsPayload,
+  useUpdateEventsMutation,
+} from "@/redux/api/events";
 import { setCookie } from "cookies-next";
 import { CookieType } from "@/enums";
 import { useRouter } from "next/navigation";
-
+import CustomModal from "@/components/modal";
+import { EventStatus } from "@/config";
+import { toast } from "react-toastify";
+import { RollbackOutlined } from "@ant-design/icons";
 interface IProps {
   data?: EventsResponse[];
   isLoading?: boolean;
 }
 const SearchTable: FC<IProps> = ({ data, isLoading }) => {
   const router = useRouter();
+  const [selectEvent, setSelectEvent] = useState<EventsResponse | null>(null);
+  const [updateEvent, { isLoading: isUpdating }] = useUpdateEventsMutation();
   const dataSource = useMemo(() => {
     return (
       data?.map((item) => {
         return {
           ...item,
-          dateStart: new Date(item.startTime).toLocaleString(),
-          dateEnd: new Date(item.endTime).toLocaleString(),
-          eventName: item.name,
-          description: item.description ?? "",
-          id: item._id,
+          dateStart: new Date(item.event.startTime).toLocaleString(),
+          dateEnd: new Date(item.event.endTime).toLocaleString(),
+          eventName: item.event.name,
+          description: item.event.description ?? "",
+          id: item.event._id,
+          status: item.event.status,
         };
       }) ?? []
     );
   }, [data]);
+
+  const handleDelete = (data: EventsResponse) => {
+    const payload: Partial<IEventsPayload> = {
+      status:
+        data.event.status === EventStatus.deleted
+          ? EventStatus.upcoming
+          : EventStatus.deleted,
+      description: data.event.description ?? "Deleted",
+    };
+    console.log(payload);
+
+    updateEvent({
+      ...payload,
+      eventId: data.event._id,
+    })
+      .unwrap()
+      .then(() => {
+        toast.success(`${data.event.name} deleted successfully`);
+      })
+      .catch(() => {
+        toast.error(`Failed to delete ${data.event.name}`);
+      });
+  };
 
   const columns = [
     {
@@ -50,7 +83,9 @@ const SearchTable: FC<IProps> = ({ data, isLoading }) => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (text: string) => <StatusTag $status={text}>{text}</StatusTag>,
+      render: (text: string) => (
+        <StatusTag $status={text ?? ""}>{text}</StatusTag>
+      ),
     },
     {
       title: "Description",
@@ -91,10 +126,21 @@ const SearchTable: FC<IProps> = ({ data, isLoading }) => {
                   key: 3,
                   label: (
                     <OptionItem>
-                      <TrashIcon /> Delete
+                      {record.status === EventStatus.deleted ? (
+                        <>
+                          <RollbackOutlined /> Restore Event
+                        </>
+                      ) : (
+                        <>
+                          <TrashIcon />
+                          Delete Event
+                        </>
+                      )}
                     </OptionItem>
                   ),
-                  onClick: () => {},
+                  onClick: () => {
+                    setSelectEvent(record);
+                  },
                 },
               ],
             }}
@@ -110,25 +156,44 @@ const SearchTable: FC<IProps> = ({ data, isLoading }) => {
   ];
 
   return (
-    <Container>
-      <ChartTitle>Events</ChartTitle>
-      {/* <CardTitle>Search users</CardTitle> */}
-      {/* <CardValue>N/A</CardValue> */}
+    <>
+      {!!selectEvent && (
+        <CustomModal
+          visible={!!selectEvent}
+          title="Delete Event"
+          onClose={() => setSelectEvent(null)}
+          onAction={() => handleDelete(selectEvent)}
+          loading={isUpdating}>
+          <DeleteBody>
+            Are you sure you want to{" "}
+            {selectEvent.event.status === EventStatus.deleted
+              ? "Restore"
+              : "delete"}{" "}
+            <span>{selectEvent.event.name}</span> which contains{" "}
+            <span>{selectEvent.participants.length}</span> participants
+          </DeleteBody>
+        </CustomModal>
+      )}
+      <Container>
+        <ChartTitle>Events</ChartTitle>
+        {/* <CardTitle>Search users</CardTitle> */}
+        {/* <CardValue>N/A</CardValue> */}
 
-      <TableWrapper>
-        <StyledTable
-          dataSource={dataSource}
-          columns={columns}
-          pagination={{
-            pageSize: 10,
-            showSizeChanger: true,
-            pageSizeOptions: ["10", "20", "50"],
-            showQuickJumper: true,
-          }}
-          loading={isLoading}
-        />
-      </TableWrapper>
-    </Container>
+        <TableWrapper>
+          <StyledTable
+            dataSource={dataSource}
+            columns={columns}
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              pageSizeOptions: ["10", "20", "50"],
+              showQuickJumper: true,
+            }}
+            loading={isLoading}
+          />
+        </TableWrapper>
+      </Container>
+    </>
   );
 };
 
@@ -266,6 +331,14 @@ export const OptionsButton = styled.button`
     margin-left: 8px;
   }
   position: relative;
+`;
+
+const DeleteBody = styled.div`
+  color: ${({ theme }) => theme.colors.neutral[700]};
+  span {
+    color: ${({ theme }) => theme.colors.darkGreen[500]};
+    font-weight: 700;
+  }
 `;
 
 export default SearchTable;

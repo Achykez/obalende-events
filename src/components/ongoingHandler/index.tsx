@@ -2,35 +2,50 @@
 import React from 'react'
 import styles from './styles.module.css'
 import Image from 'next/image'
-import slides from '@/assets/images/Group.png'
 import Location from '@/assets/icons/location'
-import BackgroundImage from "@/assets/images/image 84.png";
 import { useRouter } from 'next/navigation'
+import { EventsResponse } from '@/redux/api/events'
+import styled from "styled-components";
+import { WEBSITE_DETAILS } from '@/config'
 
-export default function OngoingHandler() {
+export default function OngoingHandler({data} : {data: EventsResponse}) {
     const router = useRouter();
 
 const toDetailPage = () => {
-    router.push('/ongoing-events');
+    router.push(`/ongoing-event/${data.event._id}`);
 }
   return (
     <div className={styles.MainContainer} onClick={toDetailPage}>
         <div className={styles.ImageContainer}>
-            <Image style={{borderRadius:"18px"}} className={styles.mainImage} src={BackgroundImage} alt='' fill/>
+            <Image style={{borderRadius:"18px"}} className={styles.mainImage} src={data?.event.image ?? ""} alt='' fill/>
         </div>
         <div className={styles.TextContainer}>
             <div className={styles.firstTextContainer}>
-                <p>International Band Mu...</p>
+                <p>{data?.event.name}</p>
             </div>
-            <div className={styles.secondTextContainer}>
-            <Image src={slides} alt='' width={56} height={24}/>
-            <p> + 20 going</p>
+            {data?.participants.length > 0 && (
+          <div className={styles.firstContainer}>
+            <div className={styles.attendantsImage}>
+              {data?.participants
+                ?.map((item, index) => (
+                  <StyledImage key={index} src={item.image} alt="attendant" />
+                ))
+                .slice(0, 3)}
             </div>
+            {data?.participants.length > 3 && (
+              <p className={styles.attendanst}>
+                <p>+{data.participants.length - 3} More</p>
+              </p>
+            )}
+          </div>
+        )}
             <div className={styles.thirdTextContainer}>
             <Location/>
-            <p>36 Guild Street London, UK </p>
+            <p>{WEBSITE_DETAILS.address} </p>
             </div>
         </div>
     </div>
   )
 }
+
+const StyledImage = styled.img``;

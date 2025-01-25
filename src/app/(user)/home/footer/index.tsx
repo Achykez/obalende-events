@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from "./styles.module.css";
+import { WEBSITE_DETAILS } from '@/config';
 
 export default function Footer() {
   return (
@@ -7,14 +8,14 @@ export default function Footer() {
       <div>
         <h2>Contact Info</h2>
         <div>
-          <p>Plot 19, Zone l, Banana Island, Ikoyi, Lagos</p>
-          <p>Email: <strong>care@obalende.com.ng</strong></p>
+          <p>{WEBSITE_DETAILS.address}</p>
+          <p>Email: <strong>{WEBSITE_DETAILS.email}</strong></p>
           <p>
-            Phone: <strong>09093473832</strong> | WhatsApp: <strong>09056537438</strong>
+            Phone: <strong>{WEBSITE_DETAILS.phoneNumber}</strong> | WhatsApp: <strong>{WEBSITE_DETAILS.whatsappN0}</strong>
           </p>
         </div>
       </div>
-      <div className={styles.secondFooterContainer}>
+      {/* <div className={styles.secondFooterContainer}>
         <div>
           <h2>About Obalende</h2>
           <div>
@@ -33,7 +34,7 @@ export default function Footer() {
             <p>Buy Airtime/Data</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
