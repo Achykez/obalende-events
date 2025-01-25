@@ -1,15 +1,22 @@
-// import { cookies } from 'next/dist/client/components/headers';
-// import { RedirectType } from 'next/dist/client/components/redirect';
-// import { redirect } from 'next/navigation';
-import { Home } from './components/home';
-// import { CookieType } from '@/enums';
+import { Spin } from "antd";
+import dynamic from "next/dynamic";
 
+const Home = dynamic(() => import("./components/home",), {
+  ssr: false,
+  loading: () => (
+    <div
+      style={{
+        display: "flex",
+        height: "100dvh",
+        width: "100%",
+        alignItems: "center",
+      }}>
+      <Spin spinning size="large" />
+    </div>
+  ),
+})
 export default function page() {
-  // const cookieStore = cookies();
-  // const user = cookieStore.get(CookieType.USER);
-  // if (!user?.value) {
-  //   redirect('/login', RedirectType.replace);
-  // }
+
   return <Home />;
 }
 

@@ -1,21 +1,16 @@
 'use client';
 
-import { AppLogo, createEvent, InfoIcon } from '@/assets';
+import { AppLogo,  InfoIcon } from '@/assets';
 import { Container, Question, OptionsContainer, InfoContainer, Option } from '../../styled-component';
 
-export const Home = () => {
+ const Home = () => {
   return (
     <>
       {/* <Navbar /> */}
       <Container>
         <Question>Welcome to Obalande Content Admin</Question>
         <OptionsContainer>
-          <Option
-            alt="create event"
-            link={'/events/create'}
-            text="Create Event"
-            image={createEvent}
-          />
+   
           <Option
             alt="manage event"
             text="Manage Events"
@@ -32,3 +27,5 @@ export const Home = () => {
     </>
   );
 };
+
+export default Home
