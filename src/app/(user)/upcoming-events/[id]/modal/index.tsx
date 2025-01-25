@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { Button } from "antd";
 import styles from "./style.module.css";
 import { IParticipant } from "@/redux/api/participants";
+import styled from "styled-components";
 
 interface IProps {
   data?: IParticipant[];
@@ -17,7 +18,7 @@ export const DisplayModal: FC<IProps> = ({ data , handleShare}) => {
         <div className={styles.attendantsImage}>
           {data
             ?.map((item, index) => (
-              <img key={index} src={item.image} alt="attendant" />
+              <StyledImage key={index} src={item.image} alt="attendant" />
             ))
             .slice(0, 3)}
         </div>
@@ -47,3 +48,6 @@ export const DisplayModal: FC<IProps> = ({ data , handleShare}) => {
     </div>
   );
 };
+
+const StyledImage = styled.img`
+`

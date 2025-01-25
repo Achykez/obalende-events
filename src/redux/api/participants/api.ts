@@ -3,6 +3,7 @@ import {
   IEditParticipant,
   IParticipant,
   IParticipantPayload,
+  IVoteParticipant,
 } from "./interface";
 import { ApiResponse, Response } from "@/redux/api/genericInterface";
 import { tagTypes } from "@/redux/baseApi/tagTypes";
@@ -52,6 +53,14 @@ const participantsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: tagTypes.PARTICIPANTS }],
     }),
+    voteParticipants: builder.mutation<Response, IVoteParticipant>({
+      query: (payload) => ({
+        url: `/participant/vote`,
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: [{ type: tagTypes.PARTICIPANTS }],
+    }),
   }),
 });
 
@@ -61,4 +70,5 @@ export const {
   useGetEventParticipantQuery,
   useUpdateParticipantMutation,
   useDeleteParticipantMutation,
+  useVoteParticipantsMutation,
 } = participantsApi;

@@ -31,6 +31,7 @@ export const OngoingBody: FC<IProps> = ({ eventDetails, participantsData }) => {
             NOV={item.votes ?? 0}
             image={item.image}
             alias={item.alias}
+            id={item._id}
           />
         ))}
       </div>

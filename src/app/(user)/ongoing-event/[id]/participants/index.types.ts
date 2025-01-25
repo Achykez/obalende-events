@@ -4,5 +4,6 @@ export interface ParticipantsProps {
     image : StaticImageData | string;
     name:string;
     alias:string;
-    NOV:number
+    NOV:number;
+    id:string;
 }

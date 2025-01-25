@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { FC, useMemo } from "react";
 import { Flex, Typography } from "antd";
 import { dateTimeFormatter, fileSizeInMegabytes } from "@/utils";
@@ -42,10 +44,7 @@ export const FileView: FC<Props> = ({
       <FileDetails>
         <Text>{fileDetails?.file.name}</Text>
         <Text>
-          {`${dateTimeFormatter(
-            fileDetails?.date ? fileDetails.date : date,
-            "MMM D, YYYY"
-          )} | ${dateTimeFormatter(fileDetails?.date, "HH:mm a")} • ${
+          {` ${
             fileDetails?.file.size
               ? fileSizeInMegabytes(fileDetails?.file.size) + "MB"
               : ""

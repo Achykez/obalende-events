@@ -1,17 +1,35 @@
 /* JSX */
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "antd";
 import Image from "next/image";
 import styled from "styled-components";
 import { ParticipantsProps } from "./index.types";
 import styles from "./style.module.css";
 import { AppLogo } from "@/assets";
+import CustomModal from "@/components/modal";
+import StepsContent from "@/components/stepForm";
 
 export default function Participants(props: ParticipantsProps) {
   const { image, NOV, name, alias } = props;
-
+  const [voted, setVoted] = useState<ParticipantsProps | null>(null);
+  const [currentStep, setCurrentStep] = useState(0);
   return (
     <div className={styles.mainContainer}>
+      {!!voted && (
+        <CustomModal
+          title={`Vote for ${alias}`}
+          visible={!!voted}
+          onClose={() => setVoted(null)}
+          onAction={() => {}}
+          noFooter>
+          <StepsContent
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            close={() => setVoted(null)}
+            dynamicId={voted.id}
+          />
+        </CustomModal>
+      )}
       <div className={styles.ImageContainer}>
         <StyledImage src={image ?? AppLogo} alt={name} fill />
       </div>
@@ -26,7 +44,9 @@ export default function Participants(props: ParticipantsProps) {
             {" "}
             <p className="bold">Votes:</p> <p> {NOV}</p>
           </span>
-          <VoteButton>Vote for {name}</VoteButton>
+          <VoteButton onClick={() => setVoted(props)}>
+            Vote for {name}
+          </VoteButton>
         </VoteContainer>
       </div>
     </div>
@@ -74,6 +94,7 @@ const VoteButton = styled(Button)`
   padding: 12px 24px;
   border-radius: 12px;
   transition: background-color 0.3s;
+  align-self: center;
 
   &:hover {
     background-color: #4056d6;

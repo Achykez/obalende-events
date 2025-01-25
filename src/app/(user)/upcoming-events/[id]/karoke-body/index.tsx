@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styles from "./styles.module.css";
 import { Calender } from "@/assets/icons/calender";
 import Pin from "@/assets/icons/pin";
@@ -9,21 +9,42 @@ import CalenderImage from "@/assets/images/Calendar.png";
 import LocationImage from "@/assets/images/Location.png";
 import Image from "next/image";
 import { DisplayModal } from "../modal";
-import {
-  IParticipant,
-
-} from "@/redux/api/participants";
-import { EventsResponse} from "@/redux/api/events";
+import { IParticipant } from "@/redux/api/participants";
+import { EventsResponse } from "@/redux/api/events";
 import { dateTimeFormatter } from "@/utils";
 import { WEBSITE_DETAILS } from "@/config";
+import CustomModal from "@/components/modal";
+import StepsContent from "@/components/stepForm";
 interface IProps {
   eventDetails: EventsResponse | null;
   participantsData: IParticipant[];
-  handleShare : () => void;
+  handleShare: () => void;
 }
-export const KarokeBody: FC<IProps> = ({ participantsData, eventDetails, handleShare }) => {
+export const KarokeBody: FC<IProps> = ({
+  participantsData,
+  eventDetails,
+  handleShare,
+}) => {
+  const [apply, setApply] = useState<EventsResponse | null>(null);
+  const [currentStep, setCurrentStep] = useState(0);
   return (
     <div className={styles.mainBody}>
+      {!!apply && (
+        <CustomModal
+          title={`Register for ${eventDetails.event.name}`}
+          visible={!!apply}
+          onClose={() => setApply(null)}
+          onAction={() => {}}
+          noFooter>
+          <StepsContent
+            isEvent
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            close={() => setApply(null)}
+            dynamicId={eventDetails?.event._id}
+          />
+        </CustomModal>
+      )}
       <div className={styles.modalContainer}>
         <DisplayModal handleShare={handleShare} data={participantsData} />
       </div>
@@ -70,6 +91,7 @@ export const KarokeBody: FC<IProps> = ({ participantsData, eventDetails, handleS
           <Button
             className={styles.button}
             icon={null}
+            onClick={() => setApply(eventDetails)}
             style={{
               backgroundColor: "#5669FF",
               padding: "24px 24px",

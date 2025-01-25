@@ -21,7 +21,13 @@ export interface IParticipant {
   updatedAt: string;
 }
 
-
-export interface IEditParticipant  extends IParticipantPayload{
+export interface IEditParticipant extends IParticipantPayload {
   id: string;
 }
+
+export interface IVoteParticipant {
+  participantId: string;
+  numberOfVotes: number;
+  proof: string;
+}
+

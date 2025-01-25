@@ -1,6 +1,6 @@
-import React from 'react';
-import { Modal, Button } from 'antd';
-import styled from 'styled-components';
+import React from "react";
+import { Modal, Button } from "antd";
+import styled from "styled-components";
 
 const StyledModal = styled(Modal)`
   @media (max-width: 768px) {
@@ -28,6 +28,7 @@ interface CustomModalProps {
   actionText?: string;
   closeText?: string;
   loading?: boolean;
+  noFooter?: boolean;
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -36,27 +37,33 @@ const CustomModal: React.FC<CustomModalProps> = ({
   children,
   onClose,
   onAction,
-  actionText = 'Confirm',
-  closeText = 'Cancel',
+  actionText = "Confirm",
+  closeText = "Cancel",
   loading = false,
+  noFooter,
   ...props
 }) => {
   return (
     <StyledModal
       title={title}
-      visible={visible}
+      open={visible}
       onCancel={onClose}
       centered
-      footer={[
-        <Button key="close" onClick={onClose}>
-          {closeText}
-        </Button>,
-        <Button loading={loading} key="action" type="primary" onClick={onAction}>
-          {actionText}
-        </Button>,
-      ]}
-      {...props}
-    >
+      footer={
+        !noFooter && [
+          <Button key="close" onClick={onClose}>
+            {closeText}
+          </Button>,
+          <Button
+            loading={loading}
+            key="action"
+            type="primary"
+            onClick={onAction}>
+            {actionText}
+          </Button>,
+        ]
+      }
+      {...props}>
       <ModalContent>{children}</ModalContent>
     </StyledModal>
   );
