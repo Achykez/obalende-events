@@ -26,14 +26,13 @@ export const SocialMediaShare: FC<Iprops> = ({
   title,
 }) => {
   return (
-    <Modal
+    <StyledModal
       onCancel={onCancel}
       open={visible}
       style={{ display: "flex", gap: "20px" }}
       footer={[]}
       title="Invite Friends"
-      className="share-modal"
-      width={250}>
+      centered>
       <SocialBody className="share-modal">
         <FacebookShareButton url={url} title={title}>
           <FacebookIcon size={32} round />
@@ -48,11 +47,23 @@ export const SocialMediaShare: FC<Iprops> = ({
           <WhatsappIcon size={32} round />
         </WhatsappShareButton>
       </SocialBody>
-    </Modal>
+    </StyledModal>
   );
 };
 
 const SocialBody = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+const StyledModal = styled(Modal)`
+  @media (max-width: 768px) {
+    width: 90% !important;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 70% !important;
+  }
+  @media (min-width: 1025px) {
+    width: 50% !important;
+  }
 `;
