@@ -41,6 +41,9 @@ export const OngoingBody: FC<IProps> = ({ eventDetails, participantsData }) => {
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
+          position: "sticky",
+          bottom: 0,
+    
         }}>
         <Button
           className={styles.button}
