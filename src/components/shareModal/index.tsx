@@ -32,7 +32,7 @@ export const SocialMediaShare: FC<Iprops> = ({
       style={{ display: "flex", gap: "20px" }}
       footer={[]}
       title="Invite Friends"
-      centered>
+      >
       <SocialBody className="share-modal">
         <FacebookShareButton url={url} title={title}>
           <FacebookIcon size={32} round />
