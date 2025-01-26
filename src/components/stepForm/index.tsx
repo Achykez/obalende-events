@@ -14,6 +14,7 @@ import {
 } from "@/redux/api/participants";
 import { toast } from "react-toastify";
 import { ACCOUNT_DETAILS } from "@/config";
+import { formatPrice } from "@/utils";
 
 const { Step } = Steps;
 
@@ -304,8 +305,8 @@ const StepsContent = ({
         <>
           <StyledCard>
             <BankDetails>
-              Transfer NGN{" "}
-              {formik.values.votes ? formik.values.votes * 100 : 5000} to
+              Transfer {""}
+              {formik.values.votes ? formatPrice(formik.values.votes * 100) : formatPrice(5000)} to
             </BankDetails>
             <AccountNumber>
               {ACCOUNT_DETAILS.bank} <br />

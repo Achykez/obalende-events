@@ -22,9 +22,9 @@ export default function OngoingHeader({data} : {data: EventsResponse}) {
           <div onClick={backTOPrev} style={{ cursor: "pointer" }}>
             <ArrowLeft />
           </div>
-          <div>
+          {/* <div>
             <p>Ongoing Details</p>
-          </div>
+          </div> */}
         </div>
         <div className={styles.absoluteImage}>
           <Image src={data?.event.image ?? AppLogo} alt="background-image" fill />
