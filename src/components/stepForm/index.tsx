@@ -13,6 +13,7 @@ import {
   useVoteParticipantsMutation,
 } from "@/redux/api/participants";
 import { toast } from "react-toastify";
+import { ACCOUNT_DETAILS } from "@/config";
 
 const { Step } = Steps;
 
@@ -307,10 +308,10 @@ const StepsContent = ({
               {formik.values.votes ? formik.values.votes * 100 : 5000} to
             </BankDetails>
             <AccountNumber>
-              Zenith Bank <br />
-              <span style={{ fontSize: "18px" }}>0001234567</span>
+              {ACCOUNT_DETAILS.bank} <br />
+              <span style={{ fontSize: "18px" }}>{ACCOUNT_DETAILS.accountNumber}</span>
             </AccountNumber>
-            <ExpiresText>Obalende karoke Competition</ExpiresText>
+            <ExpiresText>{ACCOUNT_DETAILS.name}</ExpiresText>
           </StyledCard>
 
           <form onSubmit={formik.handleSubmit}>
