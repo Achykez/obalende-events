@@ -82,6 +82,8 @@ export default function CreateEditParticipants({
           toast.error("Failed to update participant");
         } else {
           toast.success("Participant updated successfully");
+          router.back();
+
         }
       } else {
         const response = await createParticipants({
@@ -94,7 +96,6 @@ export default function CreateEditParticipants({
           toast.error("Failed to create participant");
         } else {
           toast.success("Participant added successfully");
-          router.back();
         }
       }
     } catch (error) {

@@ -4,9 +4,10 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   align-items: center;
   padding: 16px;
+
   @media (min-width: 600px) {
     flex-direction: row;
     align-items: flex-start;
@@ -14,9 +15,14 @@ const Container = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
   margin-bottom: 16px;
+  justify-content: center;
+
   @media (min-width: 600px) {
+    justify-content: flex-start;
     margin-bottom: 0;
     margin-right: 16px;
   }
@@ -24,14 +30,16 @@ const ImageWrapper = styled.div`
 
 const StyledImage = styled.img`
   width: 100%;
-  height: auto;
-  border-radius: 8px;
   max-width: 300px;
+  max-height: 400px;
   object-fit: contain;
-  max-height: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
   @media (max-width: 600px) {
-    width: 100px;
-    height: 100px;
+    max-width: unset;
+    max-height: unset;
+    flex: 1;
   }
 `;
 
@@ -41,6 +49,7 @@ const Details = styled.div`
   align-items: center;
   width: 100%;
   justify-content: center;
+
   @media (min-width: 600px) {
     align-items: flex-start;
   }
@@ -54,6 +63,7 @@ const DetailItem = styled.div`
   margin-bottom: 8px;
   font-size: 16px;
   color: #333;
+
   @media (max-width: 600px) {
     font-size: 12px;
   }
@@ -71,12 +81,19 @@ interface ParticipantDetailsProps {
 const ParticipantDetails: React.FC<ParticipantDetailsProps> = ({
   participant,
 }) => {
-  console.log("WAHALA", participant);
-
   return (
     <Container>
       <ImageWrapper>
         <StyledImage src={participant.image} alt={participant.name} />
+        {participant.proof && (
+          <>
+            <Label>Proof:</Label>
+            <StyledImage
+              src={participant.proof}
+              alt={`${participant.name} Proof`}
+            />
+          </>
+        )}
       </ImageWrapper>
       <Details>
         <DetailItem>

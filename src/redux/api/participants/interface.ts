@@ -23,6 +23,19 @@ export interface IParticipant {
   suspended: boolean;
   createdAt: string; // Use Date if you prefer converting it to a Date object.
   updatedAt: string;
+  proof?: string;
+  verified?: boolean;
+}
+
+export interface IVotes {
+  _id: string;
+  numberOfVotes: number;
+  participantId: string;
+  proof: string;
+  verified: boolean;
+  createdAt: string; // ISO 8601 date string
+  updatedAt: string; // ISO 8601 date string
+  registeredBy: string;
 }
 
 export interface IEditParticipant extends IParticipantPayload {
@@ -34,4 +47,3 @@ export interface IVoteParticipant {
   numberOfVotes: number;
   proof: string;
 }
-

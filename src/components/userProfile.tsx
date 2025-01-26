@@ -1,10 +1,9 @@
 import React, { FC, MouseEventHandler, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
-import { IUser } from '@/redux/slices';
 
 interface IProfile {
-  user: IUser;
+  user: string;
   onClick: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -12,7 +11,7 @@ export const UserProfile: FC<IProfile> = ({ user, onClick }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user) {
+    if (!user) {
       router.push('/login');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,9 +52,9 @@ const Intials = styled.p`
   border: 1px solid ${({ theme }) => theme.colors.background.green};
   background: rgba(221, 221, 221, 0.5);
 
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
    display: none;
-  }
+  } */
 `;
 
 export const UserProfileText = styled.div`

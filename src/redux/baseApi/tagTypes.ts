@@ -3,4 +3,5 @@ export const tagTypes = {
   PREFERENCES: "Preferences",
   EVENTS: "Events",
   PARTICIPANTS: "Participants",
+  VOTES: "Votes",
 };

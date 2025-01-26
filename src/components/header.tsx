@@ -1,4 +1,4 @@
-import { PersonIcon, LogoutIcon, LeftCirleArrow } from "@/assets";
+import {  LogoutIcon, LeftCirleArrow } from "@/assets";
 import { CookieType } from "@/enums";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,7 @@ export const Header: FC<IHeader> = ({ websiteUrl, title }) => {
   const router = useRouter();
 
   const handleLogout = () => {
-    deleteCookie(CookieType.USER);
+    deleteCookie(CookieType.TOKEN);
     router.push("/login");
   };
 
@@ -25,13 +25,14 @@ export const Header: FC<IHeader> = ({ websiteUrl, title }) => {
 
   return (
     <HeaderWrapper>
-      <div className="arrow" onClick={() => router.back()}>
+      <section className="arrow" onClick={() => router.back()}>
         <LeftCirleArrow />
-      </div>
       <WebsiteLink>
         <h5>{title}</h5>
         <Paragraph>{websiteUrl}</Paragraph>
       </WebsiteLink>
+      </section>
+
       {user && (
         <UserProfile
           user={user}
@@ -41,9 +42,9 @@ export const Header: FC<IHeader> = ({ websiteUrl, title }) => {
       )}
       {dropDown && (
         <DropLink>
-          <DropItem onClick={() => router.push("/profile")}>
+          {/* <DropItem onClick={() => router.push("/profile")}>
             <PersonIcon /> <span>Profile</span>
-          </DropItem>
+          </DropItem> */}
           <DropItem onClick={handleLogout}>
             <LogoutIcon /> <span>LogOut</span>
           </DropItem>
@@ -74,7 +75,7 @@ const HeaderWrapper = styled.div`
   height: 100px;
   width: 100%;
   display: flex;
-  justify-content: unset;
+  justify-content: space-between;
   gap: 24px;
   align-items: center;
   border-bottom: 0.5px solid ${({ theme }) => theme.colors.deepGrey};
@@ -87,12 +88,20 @@ const HeaderWrapper = styled.div`
   z-index: 100;
   .arrow {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    flex: 1;
+
+    @media (max-width: 768px) {
+    }
   }
 
   @media (max-width: 768px) {
     /* flex-direction: column; */
     align-items: center;
-    justify-content: unset;
+    justify-content: space-between;
     gap: 10px;
     height: auto;
     padding: 12px 16px;
@@ -120,6 +129,7 @@ const WebsiteLink = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     padding: 8px;
+    font-size: 12px;
     h5 {
       font-size: 0.9rem;
     }
@@ -143,10 +153,11 @@ const DropLink = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    bottom: unset;
-    right: unset;
-    position: relative;
-    padding: 8px;
+    bottom: -40px;
+    right: 0px;
+    position: absolute;
+    padding: 10px;
+    width: 30%;
   }
 `;
 

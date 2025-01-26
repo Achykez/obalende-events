@@ -1,14 +1,21 @@
 "use client";
 
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import styled from "styled-components";
 import ParticipantsTable from "./components/searchTable";
 import { Button, Header } from "@/components";
 import { useRouter } from "next/navigation";
 import { AddIcon } from "@/assets";
-import { useGetEventParticipantQuery } from "@/redux/api/participants";
+import {
+  useGetEventParticipantQuery,
+  useGetUnVerifiedParticipantsQuery,
+  useGetUnVerifiedVotesQuery,
+} from "@/redux/api/participants";
 import { getCookie } from "cookies-next";
 import { CookieType } from "@/enums";
+import { TabsSection } from "@/components/tabs";
+import UnVerifiedParticipants from "./components/unverifiedParticipants";
+import UnverifiedVotes from "./components/unverifiedVotes";
 
 type CardProp = {
   title: string;
@@ -37,7 +44,15 @@ export default function Participants() {
     return cookie ? cookie : "";
   }, []);
 
+  const [active, setActive] = useState("verified");
+
   const { data, isLoading } = useGetEventParticipantQuery(id);
+  const { data: unVerifiedData, isLoading: isGettingUnverified } =
+    useGetUnVerifiedParticipantsQuery(id);
+  const { data: unVerifiedVotes, isLoading: isGettingUnverifiedVotes } =
+    useGetUnVerifiedVotesQuery();
+
+    const [votes, setVotes] = useState(0)
   return (
     <PageWrapper>
       <Header title="Participants" websiteUrl="Participants for " />
@@ -72,7 +87,43 @@ export default function Participants() {
         </ButtonWrapper>
 
         <BottomWrapper>
-          <ParticipantsTable data={data?.data} loading={isLoading} id={id}/>
+          <TabsSection
+            navItems={[
+              { key: "verified", label: "Verified Participant" },
+              {
+                key: "unverified",
+                label: "Unverified Participant",
+                count: unVerifiedData?.data.length,
+              },
+              {
+                key: "unverifiedVotes",
+                label: "Unverified Votes",
+                count: votes,
+              },
+            ]}
+            active={active}
+            onNavClick={setActive}
+            title="Participants"
+          />
+          {active === "verified" && (
+            <ParticipantsTable data={data?.data} loading={isLoading} id={id} />
+          )}
+          {active === "unverified" && (
+            <UnVerifiedParticipants
+              data={unVerifiedData?.data}
+              loading={isGettingUnverified}
+              id={id}
+            />
+          )}
+          {active === "unverifiedVotes" && (
+            <UnverifiedVotes
+              data={unVerifiedVotes?.data}
+              participantData={data?.data}
+              loading={isGettingUnverifiedVotes}
+              id={id}
+              setVotes={setVotes}
+            />
+          )}
         </BottomWrapper>
       </Content>
     </PageWrapper>
@@ -96,7 +147,6 @@ const ButtonWrapper = styled.div`
   @media (max-width: 768px) {
     justify-content: center;
   }
-
 `;
 
 const StyledButtons = styled(Button)`

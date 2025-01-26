@@ -23,6 +23,7 @@ import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+
 const Login = () => {
   const router = useRouter();
   const [login, { isLoading }] = useLoginMutation();
@@ -40,14 +41,21 @@ const Login = () => {
         toast.error(err.message);
       });
   };
+
   const { values, handleSubmit, handleChange } = useFormik({
     initialValues: {
       email: "",
       password: "",
-      // verifyme: true,
     },
     onSubmit,
   });
+
+  const handleWhatsAppRedirect = (message: string) => {
+    const phoneNumber = "2348132272132"; // Replace with your WhatsApp number
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappURL, "_blank");
+  };
 
   return (
     <AuthPageContainer>
@@ -78,9 +86,11 @@ const Login = () => {
             </ChekBoxWrap>
 
             <FlatButton
-              onClick={() => {
-                router.push("/forgot-password");
-              }}>
+              type="button"
+              onClick={() =>
+                handleWhatsAppRedirect("I forgot my password. Please assist.")
+              }
+            >
               Forgot Password?
             </FlatButton>
           </AuthPageFlexbox>
@@ -89,7 +99,14 @@ const Login = () => {
         <Box>
           <AuthPageText>
             You have an issue?
-            <FlatButton>Contact Support</FlatButton>
+            <FlatButton
+              type="button"
+              onClick={() =>
+                handleWhatsAppRedirect("I am experiencing an issue. Please help.")
+              }
+            >
+              Contact Support
+            </FlatButton>
           </AuthPageText>
         </Box>
       </AuthPageContent>

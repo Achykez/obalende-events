@@ -1,13 +1,12 @@
 import { CookieType } from '@/enums';
-import { IUser } from '@/redux/slices';
 import { getCookie } from 'cookies-next';
 import { useMemo } from 'react';
 
 export const useGetUser = () => {
-  const user: IUser | null = useMemo(() => {
-    const userString = getCookie(CookieType.USER)?.toString();
+  const user: string| null = useMemo(() => {
+    const userString = getCookie(CookieType.TOKEN)?.toString();
     if (userString) {
-      return JSON.parse(userString);
+      return userString;
     }
     return null;
   }, []);
