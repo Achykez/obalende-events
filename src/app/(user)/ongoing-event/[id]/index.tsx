@@ -3,7 +3,7 @@ import React, { FC, useMemo } from "react";
 import OngoingHeader from "./ongoing-header";
 import { OngoingBody } from "./ongoing-body";
 import { useGetEventsQuery } from "@/redux/api/events";
-import { useGetEventParticipantQuery } from "@/redux/api/participants";
+import {  useGetParticipantVotesQuery } from "@/redux/api/participants";
 import { Spin } from "antd";
 
 interface IProps {
@@ -12,7 +12,7 @@ interface IProps {
 const OngoingEvents: FC<IProps> = ({ id }) => {
   const { data: eventsData, isLoading } = useGetEventsQuery({ id });
   const { data: participantsData, isLoading: isGettingParticipants } =
-    useGetEventParticipantQuery(id);
+    useGetParticipantVotesQuery(id);
 
   const eventDetails = useMemo(() => {
     return eventsData?.data?.find((event) => event.event._id === id) || null;

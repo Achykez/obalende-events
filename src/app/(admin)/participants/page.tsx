@@ -7,7 +7,7 @@ import { Button, Header } from "@/components";
 import { useRouter } from "next/navigation";
 import { AddIcon } from "@/assets";
 import {
-  useGetEventParticipantQuery,
+  useGetParticipantVotesQuery,
   useGetUnVerifiedParticipantsQuery,
   useGetUnVerifiedVotesQuery,
 } from "@/redux/api/participants";
@@ -46,7 +46,7 @@ export default function Participants() {
 
   const [active, setActive] = useState("verified");
 
-  const { data, isLoading } = useGetEventParticipantQuery(id);
+  const { data, isLoading } = useGetParticipantVotesQuery(id);
   const { data: unVerifiedData, isLoading: isGettingUnverified } =
     useGetUnVerifiedParticipantsQuery(id);
   const { data: unVerifiedVotes, isLoading: isGettingUnverifiedVotes } =

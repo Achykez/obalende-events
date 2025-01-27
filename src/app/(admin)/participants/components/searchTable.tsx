@@ -52,7 +52,7 @@ const Participants: FC<IProps> = ({ data, loading }) => {
           key: item._id,
           name: item.name,
           phoneNumber: item.phoneNumber,
-          votes: item.votes ?? "0",
+          votes: item.totalVotes ?? "0",
           status: item.suspended ? "inactive" : "active",
           image: item.image ?? "",
           alias: item.alias,

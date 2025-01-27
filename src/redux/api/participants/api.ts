@@ -48,6 +48,16 @@ const participantsApi = baseApi.injectEndpoints({
         { type: tagTypes.EVENTS },
       ],
     }),
+    getParticipantVotes: builder.query<ApiResponse<IParticipant>, string>({
+      query: (credentials) => ({
+        url: `/participant/votes/${credentials}`,
+        method: "GET",
+      }),
+      providesTags: [
+        { type: tagTypes.PARTICIPANTS },
+        { type: tagTypes.EVENTS },
+      ],
+    }),
     updateParticipant: builder.mutation<
       ApiResponse<IParticipant>,
       IEditParticipant
@@ -129,5 +139,6 @@ export const {
   useGetUnVerifiedVotesQuery,
   useValidateParticipantsMutation,
   useValidateVotesMutation,
-  useSuspendParticipantMutation
+  useSuspendParticipantMutation,
+  useGetParticipantVotesQuery
 } = participantsApi;

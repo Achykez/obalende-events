@@ -30,7 +30,7 @@ export const OngoingBody: FC<IProps> = ({ eventDetails, participantsData }) => {
             <Participants
               key={index}
               name={item.name}
-              NOV={item.votes ?? 0}
+              NOV={item.totalVotes ?? 0}
               image={item.image}
               alias={item.alias}
               id={item._id}

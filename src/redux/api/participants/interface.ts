@@ -25,6 +25,7 @@ export interface IParticipant {
   updatedAt: string;
   proof?: string;
   verified?: boolean;
+  totalVotes?: number;
 }
 
 export interface IVotes {
