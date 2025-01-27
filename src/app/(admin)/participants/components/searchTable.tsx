@@ -5,9 +5,13 @@ import { ArrowDownIcon, EyeIcon } from "@/assets";
 import { EditIcon } from "@/assets/icons/edit-icon";
 import { TrashIcon } from "@/assets/icons/trash-icon";
 import { useRouter } from "next/navigation";
-import { IParticipant } from "@/redux/api/participants";
+import {
+  IParticipant,
+  useSuspendParticipantMutation,
+} from "@/redux/api/participants";
 import CustomModal from "@/components/modal";
 import ParticipantDetails from "./viewParticipants";
+import { toast } from "react-toastify";
 
 interface IProps {
   data?: IParticipant[];
@@ -17,9 +21,29 @@ interface IProps {
 const Participants: FC<IProps> = ({ data, loading }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [suspendApi, { isLoading: isSuspending }] =
+    useSuspendParticipantMutation();
   const [selectParticipant, setSelectedParticipant] =
     useState<IParticipant | null>(null);
+  const [suspendParticipant, setSuspendParticipant] =
+    useState<IParticipant | null>(null);
   const router = useRouter();
+
+  const handleSuspend = (data: IParticipant) => {
+    const payload = {
+      id : data._id,
+      isSuspend: !data.suspended
+    }
+    suspendApi(payload)
+      .unwrap()
+      .then(() => {
+        toast.success(`${data.alias} suspended successfully`);
+        setSuspendParticipant(null);
+      })
+      .catch(() => {
+        toast.error(`Failed to suspend ${data.alias}`);
+      });
+  };
 
   const dataSource = useMemo(() => {
     return (
@@ -33,6 +57,7 @@ const Participants: FC<IProps> = ({ data, loading }) => {
           image: item.image ?? "",
           alias: item.alias,
           address: item.address,
+          ...item,
         };
       }) ?? []
     );
@@ -97,10 +122,10 @@ const Participants: FC<IProps> = ({ data, loading }) => {
                   key: 3,
                   label: (
                     <OptionItem>
-                      <TrashIcon /> Delete
+                      <TrashIcon />{record.suspended ? "Restore" : "Suspend"}
                     </OptionItem>
                   ),
-                  onClick: () => {},
+                  onClick: () => {setSuspendParticipant(record)},
                 },
               ],
             }}
@@ -137,6 +162,21 @@ const Participants: FC<IProps> = ({ data, loading }) => {
           }}
           actionText="Edit">
           <ParticipantDetails participant={selectParticipant!} />
+        </CustomModal>
+      )}
+      {!!suspendParticipant && (
+        <CustomModal
+          visible={!!suspendParticipant}
+          title={`Update ${suspendParticipant.alias} status`}
+          onClose={() => setSuspendParticipant(null)}
+          onAction={() => handleSuspend(suspendParticipant)}
+          loading={isSuspending}>
+          <DeleteBody>
+            Are you sure you want to{" "}
+            {suspendParticipant.suspended ? "Restore" : "Suspend"}{" "}
+            <span>{suspendParticipant.alias}</span> which has{" "}
+            <span>{suspendParticipant.votes}</span> votes
+          </DeleteBody>
         </CustomModal>
       )}
       <ChartTitle>Participants</ChartTitle>
@@ -282,4 +322,12 @@ export const OptionsButton = styled.button`
     margin-left: 8px;
   }
   position: relative;
+`;
+
+const DeleteBody = styled.div`
+  color: ${({ theme }) => theme.colors.neutral[700]};
+  span {
+    color: ${({ theme }) => theme.colors.darkGreen[500]};
+    font-weight: 700;
+  }
 `;

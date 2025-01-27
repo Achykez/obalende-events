@@ -52,7 +52,7 @@ export default function Participants() {
   const { data: unVerifiedVotes, isLoading: isGettingUnverifiedVotes } =
     useGetUnVerifiedVotesQuery();
 
-    const [votes, setVotes] = useState(0)
+  const [votes, setVotes] = useState(0);
   return (
     <PageWrapper>
       <Header title="Participants" websiteUrl="Participants for " />

@@ -104,6 +104,16 @@ const participantsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: tagTypes.PARTICIPANTS }],
     }),
+    suspendParticipant: builder.mutation<
+      Response,
+      { id: string; isSuspend: boolean }
+    >({
+      query: (data) => ({
+        url: `/participant/modify?id=${data.id}&suspend=${data.isSuspend}`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: tagTypes.PARTICIPANTS }],
+    }),
   }),
 });
 
@@ -119,4 +129,5 @@ export const {
   useGetUnVerifiedVotesQuery,
   useValidateParticipantsMutation,
   useValidateVotesMutation,
+  useSuspendParticipantMutation
 } = participantsApi;

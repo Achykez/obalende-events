@@ -24,17 +24,20 @@ export const OngoingBody: FC<IProps> = ({ eventDetails, participantsData }) => {
         <h2>{eventDetails?.event.name}</h2>
       </div>
       <div className={styles.participants}>
-        {participantsData?.map((item, index) => (
-          <Participants
-            key={index}
-            name={item.name}
-            NOV={item.votes ?? 0}
-            image={item.image}
-            alias={item.alias}
-            id={item._id}
-          />
-        ))}
+        {participantsData
+          ?.filter((item) => !item.suspended)
+          .map((item, index) => (
+            <Participants
+              key={index}
+              name={item.name}
+              NOV={item.votes ?? 0}
+              image={item.image}
+              alias={item.alias}
+              id={item._id}
+            />
+          ))}
       </div>
+
       <div
         style={{
           display: "flex",
@@ -43,7 +46,6 @@ export const OngoingBody: FC<IProps> = ({ eventDetails, participantsData }) => {
           width: "100%",
           position: "sticky",
           bottom: 0,
-    
         }}>
         <Button
           className={styles.button}

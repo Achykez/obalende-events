@@ -55,6 +55,13 @@ const validationSchemaStep1 = Yup.object({
     ),
 });
 
+const validationAmountSchema = Yup.object({
+  votes: Yup.number()
+    .required("This field is required")
+    .typeError("Must be a valid number")
+    .positive("Must be greater than 0"),
+});
+
 const StepsContent = ({
   currentStep,
   setCurrentStep,
@@ -100,7 +107,11 @@ const StepsContent = ({
         }
       : { votes: 0, image: null },
     validationSchema:
-      currentStep === 0 && isEvent ? validationSchemaStep1 : null,
+      currentStep === 0 && isEvent
+        ? validationSchemaStep1
+        : currentStep === 0 && !isEvent
+        ? validationAmountSchema
+        : null,
     onSubmit: (values) => {
       if (!values.image) {
         message.error("Please upload a screenshot before submitting.");
@@ -130,14 +141,14 @@ const StepsContent = ({
     registerParticipant(payload)
       .unwrap()
       .then(() => {
-        toast.success(
+        message.success(
           "Participant registered successfully!, Please wait for confirmation"
         );
         close();
         setCurrentStep(0);
       })
       .catch(() => {
-        toast.error("Error registering participant");
+        message.error("Error registering participant");
       });
   };
 
@@ -151,14 +162,14 @@ const StepsContent = ({
     voteParticpant(payload)
       .unwrap()
       .then(() => {
-        toast.success(
+        message.success(
           "Vote submitted successfully! please wait for confirmation"
         );
         close();
         setCurrentStep(0);
       })
       .catch(() => {
-        toast.error("Failed to submit vote.");
+        message.error("Failed to submit vote.");
       });
   };
 
@@ -289,7 +300,7 @@ const StepsContent = ({
                 onBlur={formik.handleBlur}
                 value={formik.values.votes}
               />
-              {formik.touched.votes && formik.errors.votes && (
+              {formik.touched.votes || formik.errors.votes && (
                 <p style={{ color: "red" }}>{formik.errors.votes}</p>
               )}
             </div>
@@ -306,11 +317,16 @@ const StepsContent = ({
           <StyledCard>
             <BankDetails>
               Transfer {""}
-              {formik.values.votes ? formatPrice(formik.values.votes * 100) : formatPrice(5000)} to
+              {formik.values.votes
+                ? formatPrice(formik.values.votes * 100)
+                : formatPrice(5000)}{" "}
+              to
             </BankDetails>
             <AccountNumber>
               {ACCOUNT_DETAILS.bank} <br />
-              <span style={{ fontSize: "18px" }}>{ACCOUNT_DETAILS.accountNumber}</span>
+              <span style={{ fontSize: "18px" }}>
+                {ACCOUNT_DETAILS.accountNumber}
+              </span>
             </AccountNumber>
             <ExpiresText>{ACCOUNT_DETAILS.name}</ExpiresText>
           </StyledCard>
