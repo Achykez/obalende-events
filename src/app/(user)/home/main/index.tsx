@@ -23,7 +23,14 @@ export default function Main({
         <span onClick={() => ref?.current.click()}>View more</span>
       </div>
       <div className="main-body">
+      {ongoingData.length > 0 ? (
         <OngoingHandler ref={ref} data={ongoingData[0]} />
+      ) : (
+        <EmptyState>
+          <Calender />
+          <p>No Ongoing Karoke Events</p>
+        </EmptyState>
+      )}
       </div>
       <div className="main-header">
         <h2>Upcoming Events</h2>
