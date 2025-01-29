@@ -23,9 +23,9 @@ export const KarokeHeader = ({
         <div onClick={backTOPrev} style={{ cursor: "pointer" }}>
           <ArrowLeft />
         </div>
-        <div>
+        {/* <div>
           <p>{eventDetails?.event.name}</p>
-        </div>
+        </div> */}
       </div>
       <div className={styles.absoluteImage}>
         <Image

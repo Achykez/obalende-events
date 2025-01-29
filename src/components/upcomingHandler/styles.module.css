@@ -1,5 +1,5 @@
 .MainContainer {
-    width: 237px;
+    width: 80%;
     flex-shrink: 0;
     /* border: 1px solid red; */
     padding: 10px;
@@ -10,6 +10,7 @@
     margin-bottom: 20px;
     cursor: pointer;
     min-height: 250px;
+ 
 }
 
 .ImageContainer {

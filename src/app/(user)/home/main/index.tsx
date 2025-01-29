@@ -65,6 +65,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 10px;
     span {
       font-size: 14px;
       color: #32329f;

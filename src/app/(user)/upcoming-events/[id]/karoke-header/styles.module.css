@@ -15,6 +15,8 @@
   /* Relative positioning within the container */
   /* Higher than background to ensure visibility */
   padding: 20px;
+  z-index: 10; /* Higher than background to ensure visibility */
+
   /* Add spacing from edges */
 }
 

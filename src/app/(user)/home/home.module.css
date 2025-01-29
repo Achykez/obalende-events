@@ -13,5 +13,5 @@
 
 .content {
     overflow-y: scroll;
-    height: calc(100% - 150px);
+    height: calc(100dvh - 120px);
 }
