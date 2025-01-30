@@ -23,7 +23,7 @@
     font-weight: bold;
     margin-bottom: 10px;
     text-transform: uppercase; /* Professional styling */
-    color: #32329f; /* Highlighted headings */
+    color: #ed141b; /* Highlighted headings */
   }
   
   .mainContainer p {
@@ -31,7 +31,7 @@
   }
   
   .mainContainer strong {
-    color:#32329f; /* Highlighted important text */
+    color:#ed141b; /* Highlighted important text */
   }
   
   /* Helpful links and about sections */
@@ -39,7 +39,7 @@
     font-size: 18px;
     margin-bottom: 10px;
     text-transform: uppercase;
-    color: #32329f;
+    color: #ed141b;
   }
   
   .secondFooterContainer div p {
@@ -49,7 +49,7 @@
   }
   
   .secondFooterContainer div p:hover {
-    color:#32329f; /* Highlight on hover */
+    color:#ed141b; /* Highlight on hover */
     text-decoration: underline;
   }
   
