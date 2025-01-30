@@ -1,6 +1,6 @@
 export const lightTheme = {
   background: {
-    primary: "#32329f",
+    primary: "#ed141b",
     secondary: "#E6E6E6",
     tertiary: "#81C784",
     success: "#FFFFFF",
@@ -176,7 +176,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   background: {
-    primary: "#32329f",
+    primary: "#ed141b",
     secondary: "#1B5E20",
     tertiary: "#4CAF50",
     success: "#000000",

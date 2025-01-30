@@ -93,7 +93,7 @@ export const KarokeBody: FC<IProps> = ({
             icon={null}
             onClick={() => setApply(eventDetails)}
             style={{
-              backgroundColor: "#5669FF",
+              backgroundColor: "#ed141b",
               padding: "24px 24px",
               color: "#fff",
               fontSize: "16px",
