@@ -32,7 +32,7 @@ export const DisplayModal: FC<IProps> = ({ data , handleShare}) => {
         <Button
         onClick={() => handleShare()}
           style={{
-            backgroundColor: "#5669FF",
+            backgroundColor: "#ed141b",
             padding: "18px 18px",
             color: "#fff",
             fontSize: "16px",
