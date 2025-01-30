@@ -2,62 +2,46 @@
 import React from "react";
 import Location from "@/assets/icons/location";
 import Image from "next/image";
-import { UpcomingProps } from "./index.types";
+import { ClosedProps } from "./index.types";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
-// Define the ref type for the component
-export type UpComingHandlerRef = HTMLDivElement;
+export default function ClosedEventHandler(props: ClosedProps) {
+  const { title, image, location, id, data } = props;
+  const router = useRouter();
 
-// Use React.forwardRef to forward the ref to the CardContainer
-const UpComingHandler = React.forwardRef<UpComingHandlerRef, UpcomingProps>(
-  (props, ref) => {
-    const { title, image, location, id, data, index } = props;
-    const router = useRouter();
+  const toDetailPage = () => {
+    router.push(`/closed-event/${id}`);
+  };
 
-    const toDetailPage = () => {
-      router.push(`/upcoming-events/${id}`);
-    };
+  return (
+    <CardContainer  onClick={toDetailPage}>
+      <ImageWrapper>
+        <StyledImage src={image} alt="Event" fill />
+      </ImageWrapper>
+      <TextContainer>
+        <Title>{title}</Title>
+        {data.length > 0 && (
+          <AttendantsContainer>
+            <AttendantsImages>
+              {data
+                .slice(0, 3)
+                .map((item, index) => <AttendantImage key={index} src={item.image} alt="attendant" />)}
+            </AttendantsImages>
+            {data.length > 3 && <MoreAttendants>+{data.length - 3} More</MoreAttendants>}
+          </AttendantsContainer>
+        )}
+        <LocationContainer>
+          <Location />
+          <LocationText>{location}</LocationText>
+        </LocationContainer>
+      </TextContainer>
+    </CardContainer>
+  );
+}
 
-    return (
-      <CardContainer ref={index === 0 ? ref : null} onClick={toDetailPage}>
-        <ImageWrapper>
-          <StyledImage src={image} alt="Event" fill />
-        </ImageWrapper>
-        <TextContainer>
-          <Title>{title}</Title>
-          {data.length > 0 && (
-            <AttendantsContainer>
-              <AttendantsImages>
-                {data
-                  .slice(0, 3)
-                  .map((item, index) => (
-                    <AttendantImage key={index} src={item.image} alt="attendant" />
-                  ))}
-              </AttendantsImages>
-              {data.length > 3 && (
-                <MoreAttendants>+{data.length - 3} More</MoreAttendants>
-              )}
-            </AttendantsContainer>
-          )}
-          <LocationContainer>
-            <Location />
-            <LocationText>{location}</LocationText>
-          </LocationContainer>
-        </TextContainer>
-      </CardContainer>
-    );
-  }
-);
-
-// Set a display name for the component (useful for debugging)
-UpComingHandler.displayName = "UpComingHandler";
-
-export default UpComingHandler;
-
-// Styled components remain the same
 const CardContainer = styled.div`
-  width: 97%;
+  width: 100%;
   padding: 12px;
   border-radius: 18px;
   background: #fff;

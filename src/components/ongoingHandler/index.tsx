@@ -15,6 +15,7 @@ const OngoingHandler = forwardRef(function OngoingHandler(
   const router = useRouter();
 
   const toDetailPage = () => {
+    
     router.push(`/ongoing-event/${data.event._id}`);
   };
 

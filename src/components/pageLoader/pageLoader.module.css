@@ -1,0 +1,74 @@
+/* PageLoader.module.css */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background: linear-gradient(to bottom, white, #f9fafb);
+	font-family: "Nunito Sans" !important;
+}
+
+.backgroundAccent {
+	position: absolute;
+	width: 16rem;
+	height: 16rem;
+	border-radius: 50%;
+	background-color: #fedbef;
+	filter: blur(12px);
+}
+
+.content {
+	position: relative;
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.letterContainer {
+	display: flex;
+	align-items: center;
+	gap: 0.15rem;
+	margin-bottom: 0.8rem;
+}
+
+.letter {
+	font-size: 2.25rem;
+	line-height: 2.5rem;
+	font-weight: 700;
+	color: #2d1919;
+	display: inline-block;
+}
+
+.locationText {
+	font-size: 1.875rem;
+	line-height: 2.25rem;
+	font-weight: 600;
+	color: #ed141b;
+}
+
+.progressContainer {
+	margin-top: 2rem;
+	width: 12rem;
+	height: 0.25rem;
+	background-color: #f3f4f6;
+	border-radius: 9999px;
+	overflow: hidden;
+}
+
+.progressBar {
+	height: 100%;
+	background-color: #ed141b;
+	transform-origin: left;
+}
+
+.loadingText {
+	margin-top: 1rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: #693f42;
+	opacity: 0.7;
+}

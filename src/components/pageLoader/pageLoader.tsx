@@ -1,100 +1,126 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
-import React from "react";
-import styled, { keyframes } from "styled-components";
+import React from 'react';
+import { motion } from 'framer-motion';
+import styles from './pageLoader.module.css'; // Import the CSS module
 
-// Define animations
-const bounce = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-`;
+export const PageLoader = () => {
+  // Animation variants
+  const containerVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: { duration: 0.6, ease: 'easeOut' }
+    }
+  };
 
-const flameFlicker = keyframes`
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-`;
+  const letterVariants = {
+    initial: { y: 0, opacity: 0 },
+    animate: (i) => ({
+      y: [0, -12, 0],
+      opacity: 1,
+      transition: {
+        y: {
+          duration: 1.2,
+          repeat: Infinity,
+          repeatType: 'reverse',
+          ease: [0.33, 1, 0.68, 1],
+          delay: i * 0.08
+        },
+        opacity: {
+          duration: 0.3,
+          ease: 'easeOut'
+        }
+      }
+    })
+  };
 
-// Styled components
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin-top: 50px;
-  background-color: ${({theme}) => theme.colors.background.light};
-  width: 100%;
-  height: 100dvh;
-  font-family: 'OregonDry', sans-serif;
-  background-color: transparent;
-`;
+  const progressVariants = {
+    initial: { scaleX: 0 },
+    animate: {
+      scaleX: 1,
+      transition: {
+        duration: 2,
+        ease: 'easeInOut',
+        repeat: Infinity
+      }
+    }
+  };
 
-const ObalendeText = styled.div`
-  font-size: 64px;
-  font-weight: bold;
-  color: black;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`;
-
-const EnuguText = styled.div`
-  font-size: 48px;
-  font-weight: bold;
-  color: red;
-  margin-top: -10px;
-`;
-
-const Letter = styled.span<{ $delay: number }>`
-  display: inline-block;
-  animation: ${bounce} 1s infinite;
-  animation-delay: ${({ $delay }) => $delay}s;
-`;
-
-// const FlameIcon = styled.span`
-//   display: inline-block;
-//   color: red;
-//   font-size: 48px;
-//   margin-left: -10px;
-//   animation: ${flameFlicker} 0.6s infinite;
-// `;
-
-// Flame SVG
-
-
-export const PageLoader: React.FC = () => {
-  const obalendeLetters = ["o", "b", "a", "l", "e", "n", "d", "e"];
+  const pulseVariants = {
+    animate: {
+      scale: [1, 1.02, 1],
+      opacity: [0.8, 1, 0.8],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: 'easeInOut'
+      }
+    }
+  };
 
   return (
-    <Container>
-      <ObalendeText>
-        {obalendeLetters.map((letter, index) => (
-          <Letter key={index} $delay={index * 0.1}>
-            {letter === "d" ? (
-              <>
-                d
-             
-              </>
-            ) : (
-              letter
-            )}
-          </Letter>
-        ))}
-      </ObalendeText>
-      <EnuguText>Enugu</EnuguText>
-    </Container>
+    <motion.div
+      className={styles.container}
+      variants={containerVariants}
+      initial="initial"
+      animate="animate"
+      aria-label="Page loading"
+      role="progressbar"
+    >
+      {/* Background accent */}
+      <motion.div
+        className={styles.backgroundAccent}
+        variants={pulseVariants}
+        animate="animate"
+      />
+
+      <div className={styles.content}>
+        {/* Main content */}
+        <div className={styles.letterContainer}>
+          {"OBALENDE".split('').map((letter, i) => (
+            <motion.span
+              key={i}
+              custom={i}
+              variants={letterVariants}
+              initial="initial"
+              animate="animate"
+              className={styles.letter}
+            >
+              {letter}
+            </motion.span>
+          ))}
+        </div>
+
+        {/* Location text with subtle entrance */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.4 }}
+          className={styles.locationText}
+        >
+          Enugu
+        </motion.div>
+
+        {/* Progress indicator */}
+        <div className={styles.progressContainer}>
+          <motion.div
+            className={styles.progressBar}
+            variants={progressVariants}
+            initial="initial"
+            animate="animate"
+          />
+        </div>
+
+        {/* Loading text */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          transition={{ delay: 0.7 }}
+          className={styles.loadingText}
+        >
+          Loading experience...
+        </motion.p>
+      </div>
+    </motion.div>
   );
 };
-
-// export default AnimatedLogo;
