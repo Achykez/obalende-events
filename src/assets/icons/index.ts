@@ -7,5 +7,7 @@ export * from "./person-icon";
 export * from "./log-out";
 export * from "./upload-icons";
 export * from "./add-icon";
-export * from "./left-circle-arrow"
-export * from "./calender"
+export * from "./left-circle-arrow";
+export * from "./calender";
+export * from "./location-tag";
+export * from "./date";

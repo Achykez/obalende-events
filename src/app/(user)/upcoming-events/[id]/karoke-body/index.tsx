@@ -15,6 +15,8 @@ import { dateTimeFormatter } from "@/utils";
 import { WEBSITE_DETAILS } from "@/config";
 import CustomModal from "@/components/modal";
 import StepsContent from "@/components/stepForm";
+import DateIcon from "@/assets/icons/date";
+import LocationTag from "@/assets/icons/location-tag";
 interface IProps {
   eventDetails: EventsResponse | null;
   participantsData: IParticipant[];
@@ -54,7 +56,8 @@ export const KarokeBody: FC<IProps> = ({
       <div className={styles.middleContainer}>
         <div className={styles.timeContainer}>
           <div className={styles.calenderIcon}>
-            <Image src={CalenderImage} alt="calender" width={30} height={30} />
+            <DateIcon />
+            {/* <Image src={CalenderImage} alt="calender" width={30} height={30} /> */}
           </div>
           <div>
             <h2>
@@ -65,7 +68,8 @@ export const KarokeBody: FC<IProps> = ({
         </div>
         <div className={styles.timeContainer}>
           <div className={styles.calenderIcon}>
-            <Image src={LocationImage} alt="calender" width={30} height={30} />
+            <LocationTag />
+            {/* <Image src={LocationImage} alt="calender" width={30} height={30} /> */}
           </div>
           <div>
             <h2>{WEBSITE_DETAILS.title}</h2>

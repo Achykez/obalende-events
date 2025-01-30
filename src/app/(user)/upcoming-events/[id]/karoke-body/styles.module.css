@@ -84,7 +84,7 @@ line-height: normal;
 .calenderIcon {
     border-radius: 12px;
     padding: 5px;
-    background: rgba(86, 105, 255, 0.5); 
+    /* background: rgba(86, 105, 255, 0.5);  */
   }
 
 .button {

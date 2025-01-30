@@ -52,7 +52,7 @@ export const OngoingBody: FC<IProps> = ({ eventDetails, participantsData }) => {
           icon={null}
           onClick={() => router.push(`/`)}
           style={{
-            backgroundColor: "#5669FF",
+            backgroundColor: "#ed141b",
             padding: "24px 24px",
             color: "#fff",
             fontSize: "16px",

@@ -117,7 +117,7 @@ const Wrapper = styled.div<{ isReverse: boolean }>`
 
     span {
       font-size: 12px;
-      color: #32329f;
+      color: #ed141b;
       text-decoration: underline;
       font-weight: 600;
     }

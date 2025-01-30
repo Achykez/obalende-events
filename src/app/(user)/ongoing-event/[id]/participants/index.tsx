@@ -88,15 +88,15 @@ const VoteContainer = styled.div`
 `;
 
 const VoteButton = styled(Button)`
-  background-color: #5669ff;
+  background-color: #ed141b;
   color: #fff;
   font-size: 16px;
-  padding: 12px 24px;
+  padding: 15px 24px;
   border-radius: 12px;
   transition: background-color 0.3s;
   align-self: center;
 
   &:hover {
-    background-color: #4056d6;
+    background-color: #ff0009;
   }
 `;
