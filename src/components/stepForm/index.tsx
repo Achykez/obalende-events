@@ -191,6 +191,8 @@ const StepsContent = ({
     setCurrentStep(currentStep - 1);
   };
 
+  const loading = isUploading || isVoting || isRegistering;
+
   return (
     <div>
       <Steps
@@ -300,9 +302,10 @@ const StepsContent = ({
                 onBlur={formik.handleBlur}
                 value={formik.values.votes}
               />
-              {formik.touched.votes || formik.errors.votes && (
-                <p style={{ color: "red" }}>{formik.errors.votes}</p>
-              )}
+              {formik.touched.votes ||
+                (formik.errors.votes && (
+                  <p style={{ color: "red" }}>{formik.errors.votes}</p>
+                ))}
             </div>
           )}
 
@@ -353,8 +356,8 @@ const StepsContent = ({
               type="primary"
               htmlType="submit"
               disabled={!formik.values.image}
-              loading={isUploading || isVoting || isRegistering}>
-              Submit
+              loading={loading}>
+              {loading ? "...Please wait" : "Submit"}
             </StyledButton>
           </form>
         </>

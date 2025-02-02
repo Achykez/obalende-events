@@ -4,7 +4,7 @@ import UpComingHandler from "@/components/upcomingHandler";
 import OngoingHandler from "@/components/ongoingHandler";
 import { EventsResponse } from "@/redux/api/events";
 import { WEBSITE_DETAILS } from "@/config";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Calender } from "@/assets";
 import ClosedEventHandler from "@/components/closedHandler";
 
@@ -24,7 +24,10 @@ export default function Main({
     <Wrapper isReverse={ongoingData.length < 1}>
       <div>
         <div className="main-header">
-          <h2>Live Event</h2>
+          <h2>
+            Live Event
+            {ongoingData.length > 0 && <span className="blinker"></span>}
+          </h2>
           {ongoingData.length > 0 && (
             <span onClick={() => ref?.current?.click()}>View more</span>
           )}
@@ -115,11 +118,38 @@ const Wrapper = styled.div<{ isReverse: boolean }>`
     align-items: center;
     padding: 20px 10px;
 
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .blinker {
+      width: 10px;
+      height: 10px;
+      background-color: #ed141b;
+      border-radius: 50%;
+      display: inline-block;
+      animation: blink 1s infinite alternate;
+    }
+
     span {
       font-size: 12px;
       color: #ed141b;
       text-decoration: underline;
       font-weight: 600;
+    }
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 1;
     }
   }
 
@@ -131,6 +161,7 @@ const Wrapper = styled.div<{ isReverse: boolean }>`
     padding: 10px;
   }
 `;
+
 const ColumnFlex = styled.div`
   display: flex;
   flex-direction: column;
