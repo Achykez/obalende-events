@@ -4,7 +4,7 @@ import UpComingHandler from "@/components/upcomingHandler";
 import OngoingHandler from "@/components/ongoingHandler";
 import { EventsResponse } from "@/redux/api/events";
 import { WEBSITE_DETAILS } from "@/config";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Calender } from "@/assets";
 import ClosedEventHandler from "@/components/closedHandler";
 
@@ -47,13 +47,15 @@ export default function Main({
         <div>
           <div className="main-header">
             <h2>Upcoming Events</h2>
-            <span
-              className="underline"
-              onClick={() => {
-                registerRef?.current?.click();
-              }}>
-              Click to Register
-            </span>
+            {upcomingData.length > 0 && (
+              <span
+                className="underline"
+                onClick={() => {
+                  registerRef?.current?.click();
+                }}>
+                Click to Register
+              </span>
+            )}
           </div>
           <div className="main-body">
             {upcomingData.length > 0 ? (
