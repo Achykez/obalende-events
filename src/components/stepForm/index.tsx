@@ -357,7 +357,7 @@ const StepsContent = ({
               htmlType="submit"
               disabled={!formik.values.image}
               loading={loading}>
-              {loading ? "...Please wait" : "Submit"}
+              {loading ? "... Please wait" : "Submit"}
             </StyledButton>
           </form>
         </>

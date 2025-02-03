@@ -31,7 +31,7 @@ export default function Participants(props: ParticipantsProps) {
         </CustomModal>
       )}
       <div className={styles.ImageContainer}>
-        <StyledImage src={image ?? AppLogo} alt={name} fill />
+        <StyledImage src={image ?? AppLogo} alt={name} fill/>
       </div>
       <div className={styles.DetailsContainer}>
         <h2 className={styles.header}>{name}</h2>
@@ -45,7 +45,7 @@ export default function Participants(props: ParticipantsProps) {
             <p className="bold">Votes:</p> <p> {NOV}</p>
           </span>
           <VoteButton onClick={() => setVoted(props)}>
-            Vote for {name}
+            Vote for {alias}
           </VoteButton>
         </VoteContainer>
       </div>
@@ -56,7 +56,6 @@ export default function Participants(props: ParticipantsProps) {
 const StyledImage = styled(Image)`
   object-fit: cover;
   width: 100%;
-  height: 100%;
   border-radius: 10px;
 `;
 
