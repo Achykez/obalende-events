@@ -5,6 +5,8 @@ import { ClosedEventBody } from "./closed-body";
 import { useGetEventsQuery } from "@/redux/api/events";
 import { useGetParticipantVotesQuery } from "@/redux/api/participants";
 import { Spin } from "antd";
+import { useRouter } from "next/navigation";
+import { EventStatus } from "@/config";
 
 interface IProps {
   id: string;
@@ -14,6 +16,7 @@ const ClosedEvent: FC<IProps> = ({ id }) => {
   const { data: eventsData, isLoading } = useGetEventsQuery({ id });
   const { data: participantsData, isLoading: isGettingParticipants } =
     useGetParticipantVotesQuery(id);
+    const router = useRouter();
 
   const eventDetails = useMemo(() => {
     return eventsData?.data?.find((event) => event.event._id === id) || null;
@@ -25,6 +28,10 @@ const ClosedEvent: FC<IProps> = ({ id }) => {
       (prev.totalVotes ?? 0) > (current.totalVotes ?? 0) ? prev : current
     );
   }, [participantsData?.data]);
+
+   if (eventDetails && eventDetails.event.status !== EventStatus.closed) {
+        router.replace("/");
+      }
 
   return (
     <Spin spinning={isLoading || isGettingParticipants} size={"default"}>
