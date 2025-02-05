@@ -49,6 +49,7 @@ const CardContainer = styled.div`
   margin-bottom: 16px;
   cursor: pointer;
   min-height: 250px;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   transition: all 0.2s ease-in-out;
